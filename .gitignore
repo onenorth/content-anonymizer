@@ -1,0 +1,23 @@
+#Visual Studio Files
+bin/
+obj/
+build/
+*.suo
+*.user
+
+#Tooling
+_ReSharper*
+
+#NuGet
+packages/
+NuGet.exe
+*.nupkg
+
+#TDS
+*.update
+IconCache/
+T4RenderCache/
+Debug/
+Release/
+BuiltFiles_*.txt
+Package_*/
