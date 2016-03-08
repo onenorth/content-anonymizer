@@ -6,9 +6,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>0fe02ff3-405e-4a7d-81af-2001e759a7ac</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceWebPhysicalPath>..\OneNorth.DataAnonymizer</SourceWebPhysicalPath>
-    <SourceWebProject>{8a4f4fbc-37f7-4768-96b8-4152db39d698}|OneNorth.DataAnonymizer\OneNorth.DataAnonymizer.csproj</SourceWebProject>
-    <SourceWebVirtualPath>/OneNorth.DataAnonymizer.csproj</SourceWebVirtualPath>
+    <SourceWebPhysicalPath>..\OneNorth.ContentAnonymizer</SourceWebPhysicalPath>
+    <SourceWebProject>{8a4f4fbc-37f7-4768-96b8-4152db39d698}|OneNorth.ContentAnonymizer\OneNorth.ContentAnonymizer.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/OneNorth.ContentAnonymizer.csproj</SourceWebVirtualPath>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
@@ -42,13 +42,13 @@
     </AssemblyAttributes>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OneNorth.DataAnonymizer\OneNorth.DataAnonymizer.csproj">
+    <ProjectReference Include="..\OneNorth.ContentAnonymizer\OneNorth.ContentAnonymizer.csproj">
       <Project>{8a4f4fbc-37f7-4768-96b8-4152db39d698}</Project>
-      <Name>OneNorth.DataAnonymizer</Name>
+      <Name>OneNorth.ContentAnonymizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ExcludedAssemblies Include="OneNorth.DataAnonymizer.dll" />
+    <ExcludedAssemblies Include="OneNorth.ContentAnonymizer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
 </Project>
