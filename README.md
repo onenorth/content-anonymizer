@@ -1,12 +1,12 @@
-# Sitecore Content Tree Data Anonymizer Module Readme
+# Sitecore Content Anonymizer Module Readme
 
 > Note: This module supports Sitecore 8.1+  For prior versions, please submit an Issue and I will try to add support.  You can also submit a pull request.
 
 ## Overview
 
-The Sitecore Data Anonymizer allows anonymization of the field values on items. 
+The Sitecore Content Anonymizer allows anonymization of the field values on items. 
 Anonymization is performed per template type on a field by field basis.
-The Data Anonymizer allows administrators to anonymize data within Sitecore's content tree. 
+The Content Anonymizer allows administrators to anonymize data within Sitecore's content tree. 
 A few examples of how data can be anonymized are as follows:
 
 1. Paragraph text replaced with Lorem Ipsom text.
@@ -87,12 +87,22 @@ The following field types and anonymization options are supported by the Data An
 
 > Note: Other field types are not currently supported.  Relationship based fields such as Droplink and Multi-list, should be anonymized by anonymizing the related item.
 
-### Instructions
-
-TODO
-
 ### Cautions
 1. Only content you chose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.
+
+## Usage
+
+![Select Template](https://raw.github.com/onenorth/content-anonymizer/master/img/select-template.jpg)
+
+![Configure Custom Formats](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-custom-formats.jpg)
+
+![Configure Search and Replace](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-search-and-replace.jpg)
+
+![Configure Naming](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-naming.jpg)
+
+![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-fields.jpg)
+
+![Configure Items](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-items.jpg)
 
 ## Installation
 
@@ -106,5 +116,5 @@ There are no configuration files associated with this module.
 
 The associated code is released under the terms of the [MIT license](http://onenorth.mit-license.org).
 
-The Data Anonymizer was inspired by and has used data definitions from:
+The Sitecore Content Anonymizer was inspired by and has used data definitions from:
 * https://github.com/marak/Faker.js/ - Copyright (c) 2014-2015 Matthew Bergman & Marak Squires 
