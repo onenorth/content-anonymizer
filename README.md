@@ -92,17 +92,17 @@ The following field types and anonymization options are supported by the Data An
 
 ## Usage
 
-![Select Template](https://raw.github.com/onenorth/content-anonymizer/master/img/select-template.jpg)
+![Select Template](https://raw.github.com/onenorth/content-anonymizer/master/img/select-template.png)
 
-![Configure Custom Formats](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-custom-formats.jpg)
+![Configure Custom Formats](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-custom-formats.png)
 
-![Configure Search and Replace](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-search-and-replace.jpg)
+![Configure Search and Replace](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-search-and-replace.png)
 
-![Configure Naming](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-naming.jpg)
+![Configure Naming](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-naming.png)
 
-![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-fields.jpg)
+![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-fields.png)
 
-![Configure Items](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-items.jpg)
+![Configure Items](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-items.png)
 
 ## Installation
 
