@@ -172,8 +172,10 @@ To run the anonymization, click the **Anonymize** button.
 Note: the anonymize button appears disabled if required fields are not populated.
 Please make sure all required fields have been filled out.
 You will see a confirmation dialog appear that summarises the selections.
+
 ![Confirm](https://raw.github.com/onenorth/content-anonymizer/master/img/confirm.png)
-If everythink looks ok, click the **Anonymize** button on the dialog.
+
+If everything looks ok, click the **Anonymize** button on the dialog.
 
 ## Development
 In order to develop, you must update the references to the Sitecore assemblies.
