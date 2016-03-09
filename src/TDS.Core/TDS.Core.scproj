@@ -32,6 +32,17 @@
     <DebugSymbols>false</DebugSymbols>
     <OutputPath>.\bin\Release\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <PackageName>OneNorth.ContentAnonymizer.1.0.0</PackageName>
+    <GeneratePackage>True</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <PackageExcludeCode>False</PackageExcludeCode>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <PackageAuthor>One North</PackageAuthor>
+    <PackagePublisher>One North</PackagePublisher>
+    <PackageReadme>
+    </PackageReadme>
+    <PackageVersion>1.0.0</PackageVersion>
+    <SitecoreAssemblyPath>C:\inetpub\wwwroot\Sitecore81\Website\bin\</SitecoreAssemblyPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
