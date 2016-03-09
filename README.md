@@ -90,6 +90,14 @@ The following field types and anonymization options are supported by the Data An
 ### Cautions
 1. Only content you chose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.
 
+## Installation
+
+Install the update packages located here: https://github.com/onenorth/data-anonymizer/tree/master/release
+
+## Configuration
+
+There are no configuration files associated with this module.
+
 ## Usage
 
 ### Select Template
@@ -159,20 +167,24 @@ You can optionally select all with the **all items** checkbox.
 
 ![Configure Items](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-items.png)
 
-### Run
+### Running
 To run the anonymization, click the **Anonymize** button.
 Note: the anonymize button appears disabled if required fields are not populated.
 Please make sure all required fields have been filled out.
 You will see a confirmation dialog appear that summarises the selections.
+![Confirm](https://raw.github.com/onenorth/content-anonymizer/master/img/confirm.png)
 If everythink looks ok, click the **Anonymize** button on the dialog.
 
-## Installation
+## Development
+In order to develop, you must update the references to the Sitecore assemblies.
+To do this, open the **Properties** of the **OneNorth.ContentAnonymizer** project.
+In the properties, navigate to the **Reference Paths** tab.
+Enter the location of the bin folder for the Sitecore installation.
 
-Install the update packages located here: https://github.com/onenorth/data-anonymizer/tree/master/release
-
-## Configuration
-
-There are no configuration files associated with this module.
+In order to generate the .update packages, TDS needs to be updated to reference the location of the Sitecore assemblies.
+To do this, open the **Properties** of the **TDS.Core** project.
+In the properties, navigate to the **Update Package** tab.
+Enter the location of the bin folder for the Sitecore installation in the **Sitecore Assembly Path** field. 
 
 #License
 
