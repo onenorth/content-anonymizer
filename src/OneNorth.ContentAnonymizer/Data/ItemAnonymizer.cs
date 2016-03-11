@@ -48,11 +48,9 @@ namespace OneNorth.ContentAnonymizer.Data
                     _fieldAnonymizer.AnonymizeCustomField(fieldInfo, item);
 
                 // Name - Perform rename last as it is dependent on the fields
-                if (options.Rename)
-                    _itemNameAnonymizer.AnonymizeItemName(item, options);
+                if (options.Rename != AnonymizeType.None)
+                    _itemNameAnonymizer.AnonymizeItemName(item, options, locale);
             }
         }
-
-        
     }
 }

@@ -18,6 +18,7 @@ There may be several reasons to anonymize data.
 
 1. Data from an existing client implmentation needs to be anonymized so it can be used for a demo.
 1. Data from live should not be brought down to development due to confidentiality.  The data can be anonymized.
+1. Data needs to be sent to Sitecore for support, but needs to be anonymized for confidentiality.
 
 ### Features
 
@@ -92,7 +93,7 @@ The following field types and anonymization options are supported by the Data An
 
 ## Installation
 
-Install the update packages located here: https://github.com/onenorth/data-anonymizer/tree/master/release
+Install the update packages located here: https://github.com/onenorth/content-anonymizer/releases
 
 ## Configuration
 
@@ -113,22 +114,27 @@ Select the template you desire.
 Once the template is chosen, additional options appear.
 
 ### Configure Custom Formats
-You can optionally configure custom formats.  
-Custom formats allow you to combine one or more value into a single string format. 
+You can optionally configure custom formats.
+Custom formats allow you to combine one or more value into a single string format.
 The resulting string can be used for text based fields or the name of the item.
+
 If you need a custom format, click the **Add** button.
 Click Add as many times as you need custom formats.
+
 Each entry needs a **name**.
 The name is used when specifying the Item Name or Field format.
 The name can be anything you desire.
-Each entry also needs at least one **token**.  
+
+Each entry also needs at least one **token**.
 The token is tied to a field and represents the chosen field.
-The first field, will be assigned "$0" as the token.  
-The second "$1", third "$2", and so on.  
+The first field, will be assigned "$0" as the token.
+The second "$1", third "$2", and so on.
 The tokens are used in the format string.
+
 A **format** string also needs to be specified.
 The format string should contain the tokens and any desired surrounding text.
 The **result** shows the interpreted format.
+
 An Example may be as follows for an email address related to person template:
 * **Name**: Email
 * **Tokens**: $0|FirstName  $1|LastName
@@ -148,8 +154,10 @@ The replacement is case sensitive.
 
 ### Configure Naming
 You can optionally rename the items that are anonymized.
-If renaming, check the **Rename Items** checkbox.
-Type of the name of the custom format to use and chose the item in the type-ahead.
+Currently, **Custom Format** and **Lorem Replace** anonymization types are supported.
+If renaming, choose an anonymization type.
+
+For Custom Format, type of the name of the custom format to use and chose the item in the type-ahead.
 The type-ahead will search the names provided in the Custom Format section.
 
 ![Configure Naming](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-naming.png)

@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Web.Http.ModelBinding;
 using OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Models;
+using OneNorth.ContentAnonymizer.Data.Locales;
 using Sitecore;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -11,18 +14,27 @@ namespace OneNorth.ContentAnonymizer.Data
         private static readonly IItemNameAnonymizer _instance = new ItemNameAnonymizer();
         public static IItemNameAnonymizer Instance { get { return _instance; } }
 
-        private ItemNameAnonymizer()
+        private readonly ILorem _lorem;
+
+        private ItemNameAnonymizer() : this (
+            Lorem.Instance)
         {
 
         }
 
-        public void AnonymizeItemName(Item item, AnonymizeOptions options)
+        internal ItemNameAnonymizer(
+            ILorem lorem)
         {
-            if (options.NameFormat == null)
+            _lorem = lorem;
+        }
+
+        public void AnonymizeItemName(Item item, AnonymizeOptions options, ILocale locale)
+        {
+            if (options.Rename == AnonymizeType.None)
                 return;
 
             // Name
-            var name = ResolveName(item, options);
+            var name = ResolveName(item, options, locale);
             var itemName = ProposeValidItemName(name, item.Parent, true);
             item.Name = itemName;
 
@@ -40,7 +52,20 @@ namespace OneNorth.ContentAnonymizer.Data
             }
         }
 
-        private string ResolveName(Item item, AnonymizeOptions options)
+        private string ResolveName(Item item, AnonymizeOptions options, ILocale locale)
+        {
+            switch (options.Rename)
+            {
+                case AnonymizeType.Custom:
+                    return ResolveCustomNameFormat(item, options);
+                case AnonymizeType.Replace:
+                    return _lorem.Replace(locale, item.Name);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private string ResolveCustomNameFormat(Item item, AnonymizeOptions options)
         {
             var format = options.NameFormat.Format;
 

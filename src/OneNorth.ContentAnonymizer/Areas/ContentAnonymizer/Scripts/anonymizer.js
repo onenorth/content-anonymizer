@@ -14,7 +14,7 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
             $scope.anonymize.formats = [];
             $scope.anonymize.items = [];
             $scope.anonymize.nameformat = null;
-            $scope.anonymize.rename = false;
+            $scope.anonymize.rename = 'None';
             if (!$scope.anonymize.replacements) {
                 //$scope.anonymize.replacements = [{ "replace": "", "with": "" }];
                 $scope.anonymize.replacements = [];

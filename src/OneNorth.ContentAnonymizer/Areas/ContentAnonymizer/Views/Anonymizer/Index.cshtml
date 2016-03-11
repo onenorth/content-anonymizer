@@ -33,12 +33,14 @@
         <p>
             The Sitecore Content Anonymizer allows anonymization of the field values on items.
             The anonymization is performed per template type on a field by field basis.
-            Anonmization is applied to ALL or selected items of the selected template type.
-            Only the latest version of the items are anonymized.
-            All prior versions of an item will be removed.
-            All language versions of the records are anonymized. Currently english based content will be used.
-            Only content chosen by template type is anonymized.
-            Be cautious of other content not anonymized. 
+            Anonymization is applied to ALL or selected items of the selected template type.
+            <ul>
+                <li>Only the latest version of the items are anonymized.</li>
+                <li>All prior versions of an item will be removed.</li>
+                <li>All language versions of the records are anonymized. Currently english based content will be used.</li>
+                <li>Only content chosen by template type is anonymized.</li>
+                <li>Be cautious of other content not anonymized.</li>
+            </ul>
         </p>
 
         <div class="panel panel-primary">
@@ -62,7 +64,9 @@
             <div class="panel-heading">Configure Custom Formats</div>
             <div class="panel-body">
                 <p>
-                    Optionally define custom formats to be used for Item Name and Field anonymization.
+                    There are many out of the box formats to choose from when anonymizing fields.
+                    If those formats do not satisfy requirements, custom formats can be defined.
+                    Custom formats can be used for Item Name and Field Value anonymization.
                     Custom formats allow you to combine one or more value into a single string format.
                     Click <strong>Add</strong> to add a custom format.
                 </p>
@@ -124,7 +128,7 @@
             <div class="panel-body">
                 <p>
                     Define global search and replace.
-                    Search and replace is performed on fields that are not chosen to be anonymized.
+                    Search and replace is performed on fields that are not configured to be anonymized.
                     Click <strong>Add</strong> to add a search and replace item.
                 </p>
                 <div class="alert alert-warning" role="alert">
@@ -164,8 +168,9 @@
             <div class="panel-body">
                 <p>
                     Optionally rename the items that are anonymized.
-                    If renaming, provide the format to use.
-                    The format must be defined in the <strong>Custom Formats</strong> section.
+                    If renaming, specify the anonymization type to use.
+                    A custom format can be specified.
+                    The custom format must be defined in the <strong>Custom Formats</strong> section.
                     Type the name of the format you would like to use.
                 </p>
                 <div class="alert alert-warning" role="alert">
@@ -173,23 +178,24 @@
                     Item names will be updated to follow standard Sitecore item naming conventions.
                     If an item name cannot be determined, the item will be renamed to <strong>Unnamed item</strong>.
                 </div>
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label for="rename-items" class="col-sm-2 control-label">Rename Items</label>
-                        <div class="col-sm-10">
-                            <input id="rename-items" type="checkbox" value="" ng-model="anonymize.rename">
-                        </div>
-                    </div>
 
-                    <div class="form-group" ng-show="anonymize.rename" ng-class="{ 'has-error': submitted && form.nameformat.$invalid }">
-                        <label for="name-format" class="col-sm-2 control-label">Format</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename"/>
-                            <span ng-show="submitted && form.nameformat.$error.required" class="help-block">Required</span>
-                        </div>
-                    </div>
-
+                <div class="form-group">
+                    <label for="rename" class="control-label">Rename</label>
+                    <select class="form-control" name="rename" id="rename" ng-model="anonymize.rename">
+                        <option value="None"></option>
+                        <option value="Custom">Custom Format</option>
+                        <optgroup label="Lorem">
+                            <option value="Replace">Replace</option>
+                        </optgroup>
+                    </select>
                 </div>
+
+                <div class="form-group" ng-class="{ 'has-error': submitted && form.nameformat.$invalid }" ng-if="anonymize.rename == 'Custom'">
+                    <label for="name-format" class="control-label">Format</label>
+                    <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename == 'Custom'"/>
+                    <span ng-show="submitted && form.nameformat.$invalid" class="help-block">Required</span>
+                </div>
+
             </div>
         </div>
     
@@ -241,6 +247,14 @@
                                     <select class="form-control" ng-model="field.Anonymize">
                                         <option value="None"></option>
                                         <option value="Custom">Custom Format</option>
+                                        <optgroup label="Lorem">
+                                            <option value="Replace">Replace</option>
+                                            <option value="Words">Words</option>
+                                            <option value="Sentence">Sentence</option>
+                                            <option value="Sentences">Sentences</option>
+                                            <option value="Paragraph">Paragraph</option>
+                                            <option value="Paragraphs">Paragraphs</option>
+                                        </optgroup>
                                         <optgroup label="Name">
                                             <option value="FirstName">First</option>
                                             <option value="LastName">Last</option>
@@ -261,14 +275,6 @@
                                             <option value="Past">Past</option>
                                             <option value="Future">Future</option>
                                             <option value="Recent">Recent</option>
-                                        </optgroup>
-                                        <optgroup label="Lorem">
-                                            <option value="Replace">Replace</option>
-                                            <option value="Words">Words</option>
-                                            <option value="Sentence">Sentence</option>
-                                            <option value="Sentences">Sentences</option>
-                                            <option value="Paragraph">Paragraph</option>
-                                            <option value="Paragraphs">Paragraphs</option>
                                         </optgroup>
                                         <optgroup label="Address">
                                             <option value="Street">Street</option>
@@ -386,7 +392,7 @@
                         <strong>{{anonymize.replacements.length}}</strong> search and replacements have been defined.
                         <hr/>
                         <h4>Naming</h4>
-                        Rename <strong>{{anonymize.rename ? 'Yes' : 'No'}}</strong>
+                        Rename <strong>{{(anonymize.rename != 'None') ? 'Yes' : 'No'}}</strong>
                         <hr/>
                         <h4>Fields</h4>
                         <strong>{{(anonymize.fields|filter:{Anonymize:'!None'}).length}}</strong> fields will be updated.
@@ -411,7 +417,7 @@
                 Processing...
             </div>
             <div class="modal-footer">
-                
+
             </div>
         </script>
     </div>
