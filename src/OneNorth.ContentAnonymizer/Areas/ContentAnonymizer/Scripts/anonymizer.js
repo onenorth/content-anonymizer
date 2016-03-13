@@ -4,6 +4,7 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
 
         $scope.anonymize = {};
         $scope.anonymize.template = null;
+        $scope.currentField = null;
         $scope.fields = {};
         $scope.items = {};
         $scope.submitted = true; // Set this to false to initially hide validation errors
@@ -19,6 +20,8 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 //$scope.anonymize.replacements = [{ "replace": "", "with": "" }];
                 $scope.anonymize.replacements = [];
             }
+
+            $scope.currentField = null;
 
             $scope.fields.filtered = [];
             $scope.fields.currentPage = 1;
@@ -102,6 +105,10 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.getFields = function(query) {
             return $scope.anonymize.fields;
         };
+
+        $scope.setCurrentField = function (field) {
+            $scope.currentField = field;
+        }
         
         $scope.addFormat = function () {
             $scope.anonymize.formats.push({ format: "$0", tokens: [{ field: null }] });
@@ -110,6 +117,14 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.removeFormat = function (index) {
             $scope.anonymize.formats.splice(index, 1);
         };
+
+        $scope.selectFormat = function (format) {
+            if ($scope.currentField === null) {
+                $scope.anonymize.nameformat = format;
+            } else {
+                $scope.currentField.Format = format;
+            }
+        }
 
         $scope.addToken = function (format) {
             if (format) {

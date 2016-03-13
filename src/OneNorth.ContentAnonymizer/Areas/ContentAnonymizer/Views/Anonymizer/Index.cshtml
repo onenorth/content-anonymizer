@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/bootstrap.min.css">
     @*<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">*@
     <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/anonymizer.css">
 
     @*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
     <script src="~/Areas/ContentAnonymizer/Scripts/jquery-1.11.0.min.js"></script>
@@ -32,14 +33,14 @@
 
         <p>
             The Sitecore Content Anonymizer allows anonymization of the field values on items.
-            The anonymization is performed per template type on a field by field basis.
-            Anonymization is applied to ALL or selected items of the selected template type.
+            The anonymization is performed based on the chosen template type on a field by field basis.
+            Anonymization is applied to the selected items of the selected template type.
             <ul>
-                <li>Only the latest version of the items are anonymized.</li>
-                <li>All prior versions of an item will be removed.</li>
-                <li>All language versions of the records are anonymized. Currently english based content will be used.</li>
-                <li>Only content chosen by template type is anonymized.</li>
-                <li>Be cautious of other content not anonymized.</li>
+                <li>The template needs to be chosen first.  The Items and Fields that can be anonymized are based on the chosen template.</li>
+                <li>Content on the item can be replaced by defining search and replace entries.</li>
+                <li>Items can be configured to be renamed.</li>
+                <li>Individual fields can be configured for anonymization.</li>
+                <li>Items can be chosen for anonymization.</li>
             </ul>
         </p>
 
@@ -60,69 +61,6 @@
             </div>
         </div>
         
-        <div class="panel panel-primary" ng-show="!form.template.$invalid">
-            <div class="panel-heading">Configure Custom Formats</div>
-            <div class="panel-body">
-                <p>
-                    There are many out of the box formats to choose from when anonymizing fields.
-                    If those formats do not satisfy requirements, custom formats can be defined.
-                    Custom formats can be used for Item Name and Field Value anonymization.
-                    Custom formats allow you to combine one or more value into a single string format.
-                    Click <strong>Add</strong> to add a custom format.
-                </p>
-                <dl class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>Provide the name of the custom format. The name is used when specifying the Item Name or Field format.</dd>
-                    <dt>Tokens</dt>
-                    <dd>Specify the field(s) that you want to use in the format. Each field will be assigned a token $0, $1, $2, etc.</dd>
-                    <dt>Format</dt>
-                    <dd>Specify the format. Use a combination of tokens and text to build out.</dd>
-                </dl>
-                <div class="row no-outside-gutter" ng-form="formatform" data-ng-repeat="format in anonymize.formats">
-                    <div class="col-sm-2">
-                        <div class="form-group" ng-class="{ 'has-error': submitted && formatform.name.$invalid }">
-                            <label for="name" class="control-label">Name</label>
-                            <input type="text" name="name" ng-model="format.name" class="form-control" required>
-                            <span ng-show="submitted && formatform.name.$error.required" class="help-block">Required</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="form-group">
-                            <label class="control-label">Tokens</label>
-                            <div ng-form="tokenform" data-ng-repeat="token in format.tokens" ng-class="{ 'has-error': submitted && tokenform.field.$invalid }">
-                                <div class="input-group">
-                                    <span class="input-group-addon">${{$index}}</span>
-                                    <input type="text" name="field" ng-model="token.field" typeahead="field as field.Name for field in anonymize.fields | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Field" class="form-control" required>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="close" aria-label="Close" ng-click="removeToken($index,format)"><span aria-hidden="true">&times;</span></button>
-                                    </span>
-                                </div>
-                                <span ng-show="submitted && tokenform.field.$invalid" class="help-block">Required</span>
-                            </div>
-                            <button type="button" class="btn btn-default" ng-click="addToken(format)">Add</button>
-
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group" ng-class="{ 'has-error': submitted && formatform.format.$invalid }">
-                            <label for="format" class="control-label">Format</label>
-                            <input type="text" name="format" ng-model="format.format" class="form-control" required>
-                            <span ng-show="submitted && formatform.format.$error.required" class="help-block">Required</span>
-                            <pre>Result: {{format.format | format : format.tokennames }}</pre>
-                        </div>
-                    </div>
-                    <div class="col-sm-1">
-                        <button type="button" class="close pull-left" aria-label="Close" ng-click="removeFormat($index)"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-11">
-                        <button type="button" class="btn btn-default pull-right" ng-click="addFormat()">Add</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="panel panel-primary" ng-show="!form.template.$invalid">
             <div class="panel-heading">Configure Search and Replace</div>
             <div class="panel-body">
@@ -164,19 +102,20 @@
         </div>
 
         <div class="panel panel-primary" ng-show="!form.template.$invalid">
-            <div class="panel-heading">Configure Naming</div>
+            <div class="panel-heading">Configure Item Names</div>
             <div class="panel-body">
                 <p>
-                    Optionally rename the items that are anonymized.
+                    Rename the items that are anonymized.
                     If renaming, specify the anonymization type to use.
                     A custom format can be specified.
-                    The custom format must be defined in the <strong>Custom Formats</strong> section.
-                    Type the name of the format you would like to use.
+                    The custom format must be defined using the **...** next to the format textbox.
+                    Once the format is defined, type the name of the format you would like to use.
                 </p>
                 <div class="alert alert-warning" role="alert">
                     <strong>Note:</strong>
                     Item names will be updated to follow standard Sitecore item naming conventions.
                     If an item name cannot be determined, the item will be renamed to <strong>Unnamed item</strong>.
+                    When more than one item exists with the same name, an auto-incrementing number will be added to the end of the name.
                 </div>
 
                 <div class="form-group">
@@ -192,10 +131,15 @@
 
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.nameformat.$invalid }" ng-if="anonymize.rename == 'Custom'">
                     <label for="name-format" class="control-label">Format</label>
-                    <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename == 'Custom'"/>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename == 'Custom'"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(null)">...</button>
+                        </span>
+                    </div>
                     <span ng-show="submitted && form.nameformat.$invalid" class="help-block">Required</span>
                 </div>
-
+                TODO: add default language picker
             </div>
         </div>
     
@@ -214,9 +158,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Anonymize</th>
+                        <th class="col-md-4">Field</th>
+                        <th class="col-md-3">Type</th>
+                        <th class="col-md-5">Anonymize</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -290,7 +234,12 @@
                                 </div>
                                 <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.format.$invalid }" ng-if="field.Anonymize == 'Custom'">
                                     <label for="format" class="control-label">Format</label>
-                                    <input type="text" class="form-control" name="format" ng-model="field.Format" id="format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="field.Anonymize == 'Custom'"/>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="format" ng-model="field.Format" id="format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="field.Anonymize == 'Custom'"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(field)">...</button>
+                                        </span>
+                                    </div>
                                     <span ng-show="submitted && fieldform.format.$invalid" class="help-block">Required</span>
                                 </div>
                             </div>
@@ -335,24 +284,29 @@
         </div>
 
         <div class="panel panel-primary" ng-if="!form.template.$invalid && anonymize.items.length > 0">
-            <div class="panel-heading">Configure Items</div>
+            <div class="panel-heading">Select Items</div>
             <div class="panel-body">
                 <p>
-                    Choose which Items you want to anonymize.
+                    Choose which Items you want to anonymize.  Please make note of the followinng.
+                    <ul>
+                        <li>Only the latest version of the items are anonymized.</li>
+                        <li>All prior versions of an item will be removed.</li>
+                        <li>All language versions of the records are anonymized. Currently english based content will be used.</li>
+                    </ul>
                 </p>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Item</th>
-                        <th>Anonymize<br/><input type="checkbox" ng-click="anonymizeAllItemsClick()" ng-checked="anonymizeAllItems()"/> all items</th>
+                        <th class="col-md-1"><input type="checkbox" ng-click="anonymizeAllItemsClick()" ng-checked="anonymizeAllItems()"/></th>
+                        <th class="col-md-11">Item</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-form="itemform" data-ng-repeat="item in items.filtered">
-                        <td>{{item.Path}}</td>
                         <td>
                             <input type="checkbox" ng-model="item.Anonymize"/>
                         </td>
+                        <td>{{item.Path}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -368,7 +322,85 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Configure Custom Formats Modal -->
+        <div class="modal fade" id="customFormatModal" tabindex="-1" role="dialog" aria-labelledby="customFormatModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="customFormatModalLabel">Configure Custom Formats</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            There are many out of the box formats to choose from when anonymizing fields.
+                            If those formats do not satisfy requirements, custom formats can be defined.
+                            Custom formats can be used for Item Name and Field Value anonymization.
+                            Custom formats allow you to combine one or more value into a single string format.
+                            Click <strong>Add</strong> to add a custom format.
+                        </p>
+                        <dl class="dl-horizontal">
+                            <dt>Name</dt>
+                            <dd>Provide the name of the custom format. The name is used when specifying the Item Name or Field format.</dd>
+                            <dt>Tokens</dt>
+                            <dd>Specify the field(s) that you want to use in the format. Each field will be assigned a token $0, $1, $2, etc.</dd>
+                            <dt>Format</dt>
+                            <dd>Specify the format. Use a combination of tokens and text to build out.</dd>
+                        </dl>
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Note:</strong> All changes are auto-saved.
+                        </div>
+                        <div class="row no-outside-gutter" ng-form="formatform" data-ng-repeat="format in anonymize.formats">
+                            <div class="col-sm-2">
+                                <div class="form-group" ng-class="{ 'has-error': submitted && formatform.name.$invalid }">
+                                    <label for="name" class="control-label">Name</label>
+                                    <input type="text" name="name" ng-model="format.name" class="form-control" required>
+                                    <span ng-show="submitted && formatform.name.$error.required" class="help-block">Required</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">Tokens</label>
+                                    <div ng-form="tokenform" data-ng-repeat="token in format.tokens" ng-class="{ 'has-error': submitted && tokenform.field.$invalid }">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">${{$index}}</span>
+                                            <input type="text" name="field" ng-model="token.field" typeahead="field as field.Name for field in anonymize.fields | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Field" class="form-control" required>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="close" aria-label="Close" ng-click="removeToken($index,format)"><span aria-hidden="true">&times;</span></button>
+                                            </span>
+                                        </div>
+                                        <span ng-show="submitted && tokenform.field.$invalid" class="help-block">Required</span>
+                                    </div>
+                                    <button type="button" class="btn btn-default" ng-click="addToken(format)">Add</button>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{ 'has-error': submitted && formatform.format.$invalid }">
+                                    <label for="format" class="control-label">Format</label>
+                                    <input type="text" name="format" ng-model="format.format" class="form-control" required>
+                                    <span ng-show="submitted && formatform.format.$error.required" class="help-block">Required</span>
+                                    <pre>Result: {{format.format | format : format.tokennames }}</pre>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="close pull-right" aria-label="Close" ng-click="removeFormat($index)"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-click="selectFormat(format)">Select</button> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-default pull-right" ng-click="addFormat()">Add</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -378,6 +410,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" role="alert">
+                            <strong>WARNING:</strong> are you sure you are ready to Anonymize the content?
                             There is no turning back once <strong>Anonymize</strong> is clicked.
                             The data will be permanently changed and prior versions will be deleted.
                             It is recommended to backup the database before proceeding.
@@ -392,7 +425,7 @@
                         <strong>{{anonymize.replacements.length}}</strong> search and replacements have been defined.
                         <hr/>
                         <h4>Naming</h4>
-                        Rename <strong>{{(anonymize.rename != 'None') ? 'Yes' : 'No'}}</strong>
+                        <strong>{{(anonymize.rename != 'None') ? 'Yes' : 'No'}}</strong> Rename
                         <hr/>
                         <h4>Fields</h4>
                         <strong>{{(anonymize.fields|filter:{Anonymize:'!None'}).length}}</strong> fields will be updated.

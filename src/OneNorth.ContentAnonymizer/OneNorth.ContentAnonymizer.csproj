@@ -160,6 +160,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\ContentAnonymizer\Content\anonymizer.css" />
     <Content Include="Areas\ContentAnonymizer\Content\bootstrap-theme.min.css" />
     <Content Include="Areas\ContentAnonymizer\Content\bootstrap.min.css" />
     <Content Include="Areas\ContentAnonymizer\Scripts\angular.min.js" />
