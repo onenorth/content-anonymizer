@@ -7,6 +7,7 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.currentField = null;
         $scope.fields = {};
         $scope.items = {};
+        $scope.languages = {};
         $scope.submitted = true; // Set this to false to initially hide validation errors
 
         $scope.init = function () {
@@ -15,6 +16,7 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
             $scope.anonymize.formats = [];
             $scope.anonymize.items = [];
             $scope.anonymize.nameformat = null;
+            $scope.anonymize.namelanguage = null;
             $scope.anonymize.rename = 'None';
             if (!$scope.anonymize.replacements) {
                 //$scope.anonymize.replacements = [{ "replace": "", "with": "" }];
@@ -98,6 +100,12 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 }).then(function (response) {
                     $scope.anonymize.items = response.data;
                     $scope.sliceItems();
+                });
+
+                $http.get('/sitecore/admin/contentanonymizer/api/getlanguages', {
+                    params: { }
+                }).then(function (response) {
+                    $scope.languages = response.data;
                 });
             }
         };

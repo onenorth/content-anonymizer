@@ -9,6 +9,7 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Models
         public List<FieldInfo> Fields { get; set; }
         public List<ItemInfo> Items { get; set; }
         public CustomFormat NameFormat { get; set; }
+        public LanguageInfo NameLanguage { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public AnonymizeType Rename { get; set; }
         public List<Replacement> Replacements { get; set; } 

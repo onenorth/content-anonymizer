@@ -122,6 +122,7 @@
     <Compile Include="Areas\ContentAnonymizer\Models\AnonymizeOptions.cs" />
     <Compile Include="Areas\ContentAnonymizer\Models\FieldInfo.cs" />
     <Compile Include="Areas\ContentAnonymizer\Models\CustomFormat.cs" />
+    <Compile Include="Areas\ContentAnonymizer\Models\LanguageInfo.cs" />
     <Compile Include="Areas\ContentAnonymizer\Models\Replacement.cs" />
     <Compile Include="Areas\ContentAnonymizer\Models\ItemInfo.cs" />
     <Compile Include="Areas\ContentAnonymizer\Models\TemplateInfo.cs" />

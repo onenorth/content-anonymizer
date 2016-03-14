@@ -47,8 +47,8 @@ namespace OneNorth.ContentAnonymizer.Data
                 foreach (var fieldInfo in options.Fields.Where(x => x.Anonymize == AnonymizeType.Custom))
                     _fieldAnonymizer.AnonymizeCustomField(fieldInfo, item);
 
-                // Name - Perform rename last as it is dependent on the fields
-                if (options.Rename != AnonymizeType.None)
+                // Name - Perform rename last as it is dependent on the fields.  Only rename using the chosen language
+                if (options.Rename != AnonymizeType.None && options.NameLanguage != null && options.NameLanguage.Name == item.Language.Name)
                     _itemNameAnonymizer.AnonymizeItemName(item, options, locale);
             }
         }

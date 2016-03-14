@@ -108,7 +108,7 @@
                     Rename the items that are anonymized.
                     If renaming, specify the anonymization type to use.
                     A custom format can be specified.
-                    The custom format must be defined using the **...** next to the format textbox.
+                    The custom format must be defined using the "..." next to the format textbox.
                     Once the format is defined, type the name of the format you would like to use.
                 </p>
                 <div class="alert alert-warning" role="alert">
@@ -139,7 +139,13 @@
                     </div>
                     <span ng-show="submitted && form.nameformat.$invalid" class="help-block">Required</span>
                 </div>
-                TODO: add default language picker
+
+                <div class="form-group" ng-class="{ 'has-error': submitted && form.namelanguage.$invalid }" ng-if="anonymize.rename == 'Custom'">
+                    <label for="name-language" class="control-label">Use Language</label>
+                    <select class="form-control" name="namelanguage" id="name-langauge" ng-options="language as language.DisplayName for language in languages track by language.Name" ng-model="anonymize.namelanguage" ng-required="anonymize.rename == 'Custom'"></select>
+                    <span ng-show="submitted && form.namelanguage.$invalid" class="help-block">Required</span>
+                </div>
+                    
             </div>
         </div>
     

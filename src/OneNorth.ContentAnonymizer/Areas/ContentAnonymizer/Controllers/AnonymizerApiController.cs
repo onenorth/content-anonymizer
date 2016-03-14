@@ -8,6 +8,8 @@ using OneNorth.ContentAnonymizer.Data;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
+using Sitecore.Data.Managers;
+using Sitecore.Extensions;
 
 namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
 {
@@ -83,6 +85,22 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
             return Json(items, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetLanguages()
+        {
+            // Obtain a reference to the master database
+            var database = Database.GetDatabase("master");
+            if (database == null)
+                throw new ApplicationException("master database not found");
+
+            // Retrieve the item from the database, and process if it exists.
+            var languages = database.GetLanguages();
+            var languageInfos = languages.Select(language => new LanguageInfo { DisplayName = language.GetDisplayName(), Name = language.Name })
+                                .OrderBy(x => x.Name)
+                                .ToList();
+
+            return Json(languageInfos, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetMediaFolders(string filter)
         {
             var index = ContentSearchManager.GetIndex("sitecore_master_index");
@@ -132,8 +150,6 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
                 var translations = item.Languages
                     .Select(x => database.GetItem(item.ID, x))
                     .Where(x => x != null && x.Versions.Count > 0);
-
-                // TODO, process the default langauge last???
 
                 // Process each translation
                 foreach(var translation in translations)
