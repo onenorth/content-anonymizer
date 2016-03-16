@@ -101,6 +101,12 @@ There are no configuration files associated with this module.
 
 ## Usage
 
+The Content Anonymizer lives under the Sitecore Admin folder.  To run the Anonymizer, navigate to:
+
+http://site.com/sitecore/admin/contentanonymizer
+
+You will be required to sign in if you are not already signed in.
+
 ### Select Template
 To start, you first need to select a template.
 Data is anonymized based on the template selected.
