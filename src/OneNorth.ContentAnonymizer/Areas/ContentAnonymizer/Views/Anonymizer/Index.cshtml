@@ -38,8 +38,8 @@
             <ul>
                 <li>The template needs to be chosen first.  The Items and Fields that can be anonymized are based on the chosen template.</li>
                 <li>Content on the item can be replaced by defining search and replace entries.</li>
-                <li>Items can be configured to be renamed.</li>
-                <li>Individual fields can be configured for anonymization.</li>
+                <li>Items can be renamed.</li>
+                <li>Individual fields can be anonymized.</li>
                 <li>Items can be chosen for anonymization.</li>
             </ul>
         </p>
@@ -110,6 +110,7 @@
                     A custom format can be specified.
                     The custom format must be defined using the "..." next to the format textbox.
                     Once the format is defined, type the name of the format you would like to use.
+                    The language of the content used in the custom format must be specified.
                 </p>
                 <div class="alert alert-warning" role="alert">
                     <strong>Note:</strong>
@@ -141,7 +142,7 @@
                 </div>
 
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.namelanguage.$invalid }" ng-if="anonymize.rename == 'Custom'">
-                    <label for="name-language" class="control-label">Use Language</label>
+                    <label for="name-language" class="control-label">Language for Format Content</label>
                     <select class="form-control" name="namelanguage" id="name-langauge" ng-options="language as language.DisplayName for language in languages track by language.Name" ng-model="anonymize.namelanguage" ng-required="anonymize.rename == 'Custom'"></select>
                     <span ng-show="submitted && form.namelanguage.$invalid" class="help-block">Required</span>
                 </div>
@@ -293,11 +294,11 @@
             <div class="panel-heading">Select Items</div>
             <div class="panel-body">
                 <p>
-                    Choose which Items you want to anonymize.  Please make note of the followinng.
+                    Choose which Items you want to anonymize.  Please make note of the following.
                     <ul>
                         <li>Only the latest version of the items are anonymized.</li>
                         <li>All prior versions of an item will be removed.</li>
-                        <li>All language versions of the records are anonymized. Currently english based content will be used.</li>
+                        <li>All language versions of the records are anonymized. Currently English based content will be used.</li>
                     </ul>
                 </p>
                 <table class="table">
@@ -416,28 +417,28 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" role="alert">
-                            <strong>WARNING:</strong> are you sure you are ready to Anonymize the content?
+                            <strong>WARNING:</strong> Are you sure you are ready to anonymize the content?
                             There is no turning back once <strong>Anonymize</strong> is clicked.
                             The data will be permanently changed and prior versions will be deleted.
-                            It is recommended to backup the database before proceeding.
+                            It is recommended to back up the database before proceeding.
                         </div>
                         <h4>Template</h4>
-                        <strong>{{anonymize.template.Path}}</strong> will be processed.
+                        <strong>{{anonymize.template.Path}}</strong> will be processed
                         <hr/>
                         <h4>Custom Formats</h4>
-                        <strong>{{anonymize.formats.length}}</strong> custom formats have been defined.
+                        <strong>{{anonymize.formats.length}}</strong> custom formats have been defined
                         <hr/>
                         <h4>Search and Replace</h4>
-                        <strong>{{anonymize.replacements.length}}</strong> search and replacements have been defined.
+                        <strong>{{anonymize.replacements.length}}</strong> search and replacements have been defined
                         <hr/>
                         <h4>Naming</h4>
                         <strong>{{(anonymize.rename != 'None') ? 'Yes' : 'No'}}</strong> Rename
                         <hr/>
                         <h4>Fields</h4>
-                        <strong>{{(anonymize.fields|filter:{Anonymize:'!None'}).length}}</strong> fields will be updated.
+                        <strong>{{(anonymize.fields|filter:{Anonymize:'!None'}).length}}</strong> fields will be updated
                         <hr/>
                         <h4>Items</h4>
-                        <strong>{{(anonymize.items|filter:{Anonymize:true}).length}}</strong> items will be updated.
+                        <strong>{{(anonymize.items|filter:{Anonymize:true}).length}}</strong> items will be updated
 
                     </div>
                     <div class="modal-footer">
