@@ -23,6 +23,7 @@
     @*<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>*@
     <script src="~/Areas/ContentAnonymizer/Scripts/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="~/Areas/ContentAnonymizer/Scripts/format.js"></script>
+
     <script src="~/Areas/ContentAnonymizer/Scripts/anonymizer.js"></script>
 </head>
 <body ng-controller="anonymizerController">
@@ -54,13 +55,13 @@
                 </p>
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.template.$invalid }">
                     <label for="template" class="control-label" required>Template</label>
-                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Template" required/>
+                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Template" required />
                     <span ng-show="submitted && form.template.$invalid" class="help-block">Required</span>
                     <i ng-show="loadingTemplates" class="glyphicon glyphicon-refresh"></i>
                 </div>
             </div>
         </div>
-        
+
         <div class="panel panel-primary" ng-show="!form.template.$invalid">
             <div class="panel-heading">Configure Search and Replace</div>
             <div class="panel-body">
@@ -77,7 +78,7 @@
                         <div class="form-group" ng-class="{ 'has-error': submitted && replaceform.replace.$invalid }">
                             <div class="input-group">
                                 <span class="input-group-addon">Replace</span>
-                                <input type="text" class="form-control" name="replace" ng-model="replacement.Replace" required/>
+                                <input type="text" class="form-control" name="replace" ng-model="replacement.Replace" required />
                             </div>
                             <span ng-show="submitted && replaceform.replace.$error.required" class="help-block">Required</span>
                         </div>
@@ -86,11 +87,12 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">With</span>
-                                <input type="text" class="form-control" name="with" ng-model="replacement.With"/>
+                                <input type="text" class="form-control" name="with" ng-model="replacement.With" />
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-1"><button type="button" class="close pull-left" aria-label="Close" ng-click="removeReplacement($index)"><span aria-hidden="true">&times;</span></button>
+                    <div class="col-sm-1">
+                        <button type="button" class="close pull-left" aria-label="Close" ng-click="removeReplacement($index)"><span aria-hidden="true">&times;</span></button>
                     </div>
                 </div>
                 <div class="row">
@@ -133,7 +135,7 @@
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.nameformat.$invalid }" ng-if="anonymize.rename == 'Custom'">
                     <label for="name-format" class="control-label">Format</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename == 'Custom'"/>
+                        <input type="text" class="form-control" name="nameformat" ng-model="anonymize.nameformat" id="name-format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="anonymize.rename == 'Custom'" />
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(null)">...</button>
                         </span>
@@ -146,10 +148,10 @@
                     <select class="form-control" name="namelanguage" id="name-langauge" ng-options="language as language.DisplayName for language in languages track by language.Name" ng-model="anonymize.namelanguage" ng-required="anonymize.rename == 'Custom'"></select>
                     <span ng-show="submitted && form.namelanguage.$invalid" class="help-block">Required</span>
                 </div>
-                    
+
             </div>
         </div>
-    
+
         <div class="panel panel-primary" ng-if="!form.template.$invalid && anonymize.fields.length > 0">
             <div class="panel-heading">Configure Fields</div>
             <div class="panel-body">
@@ -164,126 +166,129 @@
                 </div>
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th class="col-md-4">Field</th>
-                        <th class="col-md-3">Type</th>
-                        <th class="col-md-5">Anonymize</th>
-                    </tr>
+                        <tr>
+                            <th class="col-md-4">Field</th>
+                            <th class="col-md-3">Type</th>
+                            <th class="col-md-5">Anonymize</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-form="fieldform" data-ng-repeat="field in fields.filtered">
-                        <td>{{field.DisplayName}}</td>
-                        <td>{{field.Type}}</td>
-                        <td>
-                            <div ng-if="field.Type == 'Date'">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="field.Anonymize">
-                                        <option value="None"></option>
-                                        <option value="Past">Past</option>
-                                        <option value="Future">Future</option>
-                                        <option value="Recent">Recent</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div ng-if="field.Type == 'Integer'">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="field.Anonymize">
-                                        <option value="None"></option>
-                                        <option value="Integer">Integer</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div ng-if="field.Type == 'Single-Line Text' || field.Type == 'Multi-Line Text' || field.Type == 'Rich Text'">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="field.Anonymize">
-                                        <option value="None"></option>
-                                        <option value="Custom">Custom Format</option>
-                                        <optgroup label="Lorem">
-                                            <option value="Replace">Replace</option>
-                                            <option value="Words">Words</option>
-                                            <option value="Sentence">Sentence</option>
-                                            <option value="Sentences">Sentences</option>
-                                            <option value="Paragraph">Paragraph</option>
-                                            <option value="Paragraphs">Paragraphs</option>
-                                        </optgroup>
-                                        <optgroup label="Name">
-                                            <option value="FirstName">First</option>
-                                            <option value="LastName">Last</option>
-                                            <option value="Prefix">Prefix</option>
-                                            <option value="Suffix">Suffix</option>
-                                        </optgroup>
-                                        <optgroup label="Phone">
-                                            <option value="Phone">Phone</option>
-                                            <option value="Fax">Fax</option>
-                                            <option value="Mobile">Mobile</option>
-                                        </optgroup>
-                                        <optgroup label="Internet">
-                                            <option value="Email">Email</option>
-                                            <option value="Url">URL</option>
-                                            <option value="UserName">UserName</option>
-                                        </optgroup>
-                                        <optgroup label="Date">
+                        <tr ng-form="fieldform" data-ng-repeat="field in fields.filtered">
+                            <td>{{field.DisplayName}}</td>
+                            <td>{{field.Type}}</td>
+                            <td>
+                                <div ng-if="field.Type == 'Date'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
                                             <option value="Past">Past</option>
                                             <option value="Future">Future</option>
                                             <option value="Recent">Recent</option>
-                                        </optgroup>
-                                        <optgroup label="Address">
-                                            <option value="Street">Street</option>
-                                            <option value="City">City</option>
-                                            <option value="State">State</option>
-                                            <option value="PostalCode">PostalCode</option>
-                                            <option value="Country">Country</option>
-                                            <option value="Latitude">Latitude</option>
-                                            <option value="Longitude">Longitude</option>
-                                            <option value="Coordinates">Coordinates</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.format.$invalid }" ng-if="field.Anonymize == 'Custom'">
-                                    <label for="format" class="control-label">Format</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="format" ng-model="field.Format" id="format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="field.Anonymize == 'Custom'"/>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(field)">...</button>
-                                        </span>
+                                        </select>
                                     </div>
-                                    <span ng-show="submitted && fieldform.format.$invalid" class="help-block">Required</span>
                                 </div>
-                            </div>
-                            <div ng-if="field.Type == 'Checkbox'"></div>
-                            <div ng-if="field.Type == 'Droptree'"></div>
-                            <div ng-if="field.Type == 'Droplink'"></div>
-                            <div ng-if="field.Type == 'File'">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="field.Anonymize">
-                                        <option value="None"></option>
-                                        <option value="File">File</option>
-                                    </select>
+                                <div ng-if="field.Type == 'Integer'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="Integer">Integer</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.filemediafolder.$invalid }" ng-if="field.Anonymize == 'File'">
-                                    <label for="filemediafolder" class="control-label">Media Folder</label>
-                                    <input type="text" class="form-control" name="filemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'File'"/>
-                                    <span ng-show="submitted && fieldform.filemediafolder.$invalid" class="help-block">Required</span>
+                                <div ng-if="field.Type == 'Single-Line Text' || field.Type == 'Multi-Line Text' || field.Type == 'Rich Text'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="Custom">Custom Format</option>
+                                            <optgroup label="Lorem">
+                                                <option value="Replace">Replace</option>
+                                                <option value="Words">Words</option>
+                                                <option value="Sentence">Sentence</option>
+                                                <option value="Sentences">Sentences</option>
+                                                <option value="Paragraph">Paragraph</option>
+                                                <option value="Paragraphs">Paragraphs</option>
+                                            </optgroup>
+                                            <optgroup label="Name">
+                                                <option value="FirstName">First</option>
+                                                <option value="LastName">Last</option>
+                                                <option value="Prefix">Prefix</option>
+                                                <option value="Suffix">Suffix</option>
+                                            </optgroup>
+                                            <optgroup label="Phone">
+                                                <option value="Phone">Phone</option>
+                                                <option value="Fax">Fax</option>
+                                                <option value="Mobile">Mobile</option>
+                                            </optgroup>
+                                            <optgroup label="Internet">
+                                                <option value="Email">Email</option>
+                                                <option value="Url">URL</option>
+                                                <option value="UserName">UserName</option>
+                                            </optgroup>
+                                            <optgroup label="Date">
+                                                <option value="Past">Past</option>
+                                                <option value="Future">Future</option>
+                                                <option value="Recent">Recent</option>
+                                            </optgroup>
+                                            <optgroup label="Number">
+                                                <option value="Integer">Integer</option>
+                                            </optgroup>
+                                            <optgroup label="Address">
+                                                <option value="Street">Street</option>
+                                                <option value="City">City</option>
+                                                <option value="State">State</option>
+                                                <option value="PostalCode">PostalCode</option>
+                                                <option value="Country">Country</option>
+                                                <option value="Latitude">Latitude</option>
+                                                <option value="Longitude">Longitude</option>
+                                                <option value="Coordinates">Coordinates</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.format.$invalid }" ng-if="field.Anonymize == 'Custom'">
+                                        <label for="format" class="control-label">Format</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="format" ng-model="field.Format" id="format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="field.Anonymize == 'Custom'" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(field)">...</button>
+                                            </span>
+                                        </div>
+                                        <span ng-show="submitted && fieldform.format.$invalid" class="help-block">Required</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div ng-if="field.Type == 'Image'">
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="field.Anonymize">
-                                        <option value="None"></option>
-                                        <option value="Image">Image</option>
-                                    </select>
+                                <div ng-if="field.Type == 'Checkbox'"></div>
+                                <div ng-if="field.Type == 'Droptree'"></div>
+                                <div ng-if="field.Type == 'Droplink'"></div>
+                                <div ng-if="field.Type == 'File'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="File">File</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.filemediafolder.$invalid }" ng-if="field.Anonymize == 'File'">
+                                        <label for="filemediafolder" class="control-label">Parent Media Folder</label>
+                                        <input type="text" class="form-control" name="filemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'File'" />
+                                        <span ng-show="submitted && fieldform.filemediafolder.$invalid" class="help-block">Required</span>
+                                    </div>
                                 </div>
-                                <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.imagemediafolder.$invalid }" ng-if="field.Anonymize == 'Image'">
-                                    <label for="imagemediafolder" class="control-label">Media Folder</label>
-                                    <input type="text" class="form-control" name="imagemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'Image'"/>
-                                    <span ng-show="submitted && fieldform.imagemediafolder.$invalid" class="help-block">Required</span>
+                                <div ng-if="field.Type == 'Image'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="Image">Image</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.imagemediafolder.$invalid }" ng-if="field.Anonymize == 'Image'">
+                                        <label for="imagemediafolder" class="control-label">Parent Media Folder</label>
+                                        <input type="text" class="form-control" name="imagemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'Image'" />
+                                        <span ng-show="submitted && fieldform.imagemediafolder.$invalid" class="help-block">Required</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div ng-if="field.Type == 'ItemAggregate'"></div>
-                            <div ng-if="field.Type == 'Multilist'"></div>
-                            <div ng-if="field.Type == 'Treelist'"></div>
-                        </td>
-                    </tr>
+                                <div ng-if="field.Type == 'ItemAggregate'"></div>
+                                <div ng-if="field.Type == 'Multilist'"></div>
+                                <div ng-if="field.Type == 'Treelist'"></div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <pagination class="pull-right" total-items="anonymize.fields.length" items-per-page="fields.itemsPerPage" ng-model="fields.currentPage" ng-change="sliceFields()"></pagination>
@@ -303,18 +308,18 @@
                 </p>
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th class="col-md-1"><input type="checkbox" ng-click="anonymizeAllItemsClick()" ng-checked="anonymizeAllItems()"/></th>
-                        <th class="col-md-11">Item</th>
-                    </tr>
+                        <tr>
+                            <th class="col-md-1"><input type="checkbox" ng-click="anonymizeAllItemsClick()" ng-checked="anonymizeAllItems()" /></th>
+                            <th class="col-md-11">Item</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-form="itemform" data-ng-repeat="item in items.filtered">
-                        <td>
-                            <input type="checkbox" ng-model="item.Anonymize"/>
-                        </td>
-                        <td>{{item.Path}}</td>
-                    </tr>
+                        <tr ng-form="itemform" data-ng-repeat="item in items.filtered">
+                            <td>
+                                <input type="checkbox" ng-model="item.Anonymize" />
+                            </td>
+                            <td>{{item.Path}}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <pagination class="pull-right" total-items="anonymize.items.length" items-per-page="items.itemsPerPage" ng-model="items.currentPage" ng-change="sliceItems()"></pagination>
@@ -391,7 +396,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <button type="button" class="close pull-right" aria-label="Close" ng-click="removeFormat($index)"><span aria-hidden="true">&times;</span></button>
-                                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-click="selectFormat(format)">Select</button> 
+                                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-click="selectFormat(format)">Select</button>
                             </div>
                         </div>
                         <div class="row">
@@ -407,7 +412,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -424,19 +429,19 @@
                         </div>
                         <h4>Template</h4>
                         <strong>{{anonymize.template.Path}}</strong> will be processed
-                        <hr/>
+                        <hr />
                         <h4>Custom Formats</h4>
                         <strong>{{anonymize.formats.length}}</strong> custom formats have been defined
-                        <hr/>
+                        <hr />
                         <h4>Search and Replace</h4>
                         <strong>{{anonymize.replacements.length}}</strong> search and replacements have been defined
-                        <hr/>
+                        <hr />
                         <h4>Naming</h4>
                         <strong>{{(anonymize.rename != 'None') ? 'Yes' : 'No'}}</strong> Rename
-                        <hr/>
+                        <hr />
                         <h4>Fields</h4>
                         <strong>{{(anonymize.fields|filter:{Anonymize:'!None'}).length}}</strong> fields will be updated
-                        <hr/>
+                        <hr />
                         <h4>Items</h4>
                         <strong>{{(anonymize.items|filter:{Anonymize:true}).length}}</strong> items will be updated
 
@@ -449,17 +454,52 @@
             </div>
         </div>
 
-        <script type="text/ng-template" id="processing.html">
-            <div class="modal-header">
-                <h3 class="modal-title">Anonymizing Items</h3>
+        <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" aria-labelledby="processingModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="processingModalLabel">Anonymizing Items</h3>
+                    </div>
+                    <div class="modal-body">
+                        Processing...
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                Processing...
-            </div>
-            <div class="modal-footer">
+        </div>
 
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="errorModalLabel">Error</h4>
+                    </div>
+                    <div class="modal-body">
+                        An error occurred. Please see the Sitecore logs for details...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
             </div>
-        </script>
+        </div>
+
+        <div class="modal fade" id="forbiddenModal" tabindex="-1" role="dialog" aria-labelledby="forbiddenModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="forbiddenModalLabel">Forbidden</h4>
+                    </div>
+                    <div class="modal-body">
+                        Please login to Sitecore to continue. Click <a href="/sitecore/admin/login.aspx?returnUrl=%2fsitecore%2fadmin%2fcontentanonymizer" target="_blank">here</a> to login to another tab/window so your work is not lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

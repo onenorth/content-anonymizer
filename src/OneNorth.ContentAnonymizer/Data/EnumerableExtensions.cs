@@ -23,7 +23,11 @@ namespace OneNorth.ContentAnonymizer.Data
             if (source == null) throw new ArgumentNullException("source");
 
             var buffer = source.ToList();
-            var j = RandomProvider.GetThreadRandom().Next(0, buffer.Count);
+            var count = buffer.Count;
+            if (count == 0)
+                return default(T);
+
+            var j = RandomProvider.GetThreadRandom().Next(0, count - 1);
             return buffer[j];
         }
     }

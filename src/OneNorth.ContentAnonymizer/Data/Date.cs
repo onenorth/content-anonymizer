@@ -18,6 +18,12 @@ namespace OneNorth.ContentAnonymizer.Data
             return DateTime.Now.AddDays(-days);
         }
 
+        public DateTime Recent()
+        {
+            var days = RandomProvider.GetThreadRandom().Next(0, 30);
+            return DateTime.Now.AddDays(-days);
+        }
+
         public DateTime Future()
         {
             var days = RandomProvider.GetThreadRandom().Next(0, 365);

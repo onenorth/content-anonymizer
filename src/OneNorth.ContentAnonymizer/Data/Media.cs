@@ -60,17 +60,23 @@ namespace OneNorth.ContentAnonymizer.Data
             if (index == null)
                 throw new ApplicationException("sitecore_master_index not found");
 
-            var templateId = ((Item) currentMediaItem).TemplateID;
+            var item = (Item) currentMediaItem;
+            var templateId = item.TemplateID;
+            var language = item.Language.Name;
 
             List<SearchResultItem> searchResultItems;
             using (var context = index.CreateSearchContext())
             {
                 searchResultItems = context.GetQueryable<SearchResultItem>()
-                    .Where(x => x.TemplateId == templateId && x.Path.Contains(parentPath) && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en"))
+                    .Where(x => x.TemplateId == templateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language == language)
                     .ToList();
             }
+
+            // Filter based on path
+            searchResultItems = searchResultItems.Where(x => x.Path.StartsWith(parentPath)).ToList();
+
             var searchResultItem = searchResultItems.Random();
-            var item = searchResultItem.GetItem();
+            item = searchResultItem.GetItem();
             var mediaItem = new MediaItem(item);
             return mediaItem;
         }

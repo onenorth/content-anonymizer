@@ -20,7 +20,11 @@ namespace OneNorth.ContentAnonymizer.Data
                 return locale.NameFirst.Random();
 
             var firstLetter = original[0].ToString();
-            return locale.NameFirst.Where(x => x.StartsWith(firstLetter, StringComparison.OrdinalIgnoreCase)).Random();
+            var filtered = locale.NameFirst.Where(x => x.StartsWith(firstLetter, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (!filtered.Any())
+                filtered = locale.NameFirst;
+
+            return filtered.Random();
         }
 
         public string LastName(ILocale locale, string original = null)
@@ -29,7 +33,11 @@ namespace OneNorth.ContentAnonymizer.Data
                 return locale.NameLast.Random();
 
             var firstLetter = original[0].ToString();
-            return locale.NameLast.Where(x => x.StartsWith(firstLetter, StringComparison.OrdinalIgnoreCase)).Random();
+            var filtered = locale.NameLast.Where(x => x.StartsWith(firstLetter, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (!filtered.Any())
+                filtered = locale.NameLast;
+
+            return filtered.Random();
         }
 
         public string Prefix(ILocale locale)

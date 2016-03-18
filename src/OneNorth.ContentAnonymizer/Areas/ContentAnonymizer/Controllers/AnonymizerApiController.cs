@@ -19,7 +19,7 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
         private readonly ID _mediaFolderTemplateId = new ID("{FE5DD826-48C6-436D-B87A-7C4210C7413B}");
         private readonly ID _templateTemplateId = new ID("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
 
-        public JsonResult GetTemplates(string filter)
+        public ActionResult GetTemplates(string filter)
         {
             var index = ContentSearchManager.GetIndex("sitecore_master_index");
             if (index == null)

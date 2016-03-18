@@ -134,6 +134,9 @@ namespace OneNorth.ContentAnonymizer.Data
                 case AnonymizeType.Prefix:
                     field.Value = _name.Prefix(locale);
                     break;
+                case AnonymizeType.Recent:
+                    field.Value = DateUtil.ToIsoDate(_date.Recent());
+                    break;
                 case AnonymizeType.Replace:
                     field.Value = _lorem.Replace(locale, field.Value);
                     break;

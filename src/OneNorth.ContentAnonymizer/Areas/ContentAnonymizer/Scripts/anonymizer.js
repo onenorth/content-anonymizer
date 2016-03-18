@@ -1,6 +1,6 @@
 ﻿
 angular.module("anonymizer", ['ui.bootstrap','ui.format'])
-    .controller("anonymizerController", function ($scope, $modal, $http) {
+    .controller("anonymizerController", function ($scope, $modal, $http, $window) {
 
         $scope.anonymize = {};
         $scope.anonymize.template = null;
@@ -70,14 +70,25 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
             });
         }, true);
 
+        var errorCallback = function (response) {
+            angular.element('#processingModal').modal('hide');
+            if (response.status === 403) {
+                angular.element('#forbiddenModal').modal('show');
+                //$window.location.reload();
+            } else {
+                angular.element('#errorModal').modal('show');
+            }
+            return [];
+        }
+
         $scope.getTemplates = function (filter) {
             return $http.get('/sitecore/admin/contentanonymizer/api/gettemplates', {
                 params: {
                     filter: filter
                 }
-            }).then(function (response) {
+            }).then(function successCallback(response) {
                 return response.data;
-            });
+            }, errorCallback);
         };
         
         $scope.onTemplateSelect = function ($item, $model, $label) {
@@ -88,25 +99,25 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                     params: {
                         templateId: $item.Id
                     }
-                }).then(function (response) {
+                }).then(function successCallback(response) {
                     $scope.anonymize.fields = response.data;
                     $scope.sliceFields();
-                });
+                }, errorCallback);
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getitems', {
                     params: {
                         templateId: $item.Id
                     }
-                }).then(function (response) {
+                }).then(function successCallback(response) {
                     $scope.anonymize.items = response.data;
                     $scope.sliceItems();
-                });
+                }, errorCallback);
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getlanguages', {
                     params: { }
-                }).then(function (response) {
+                }).then(function successCallback(response) {
                     $scope.languages = response.data;
-                });
+                }, errorCallback);
             }
         };
 
@@ -163,9 +174,9 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 params: {
                     filter: filter
                 }
-            }).then(function (response) {
+            }).then(function successCallback(response) {
                 return response.data;
-            });
+            }, errorCallback);
         };
 
         $scope.submit = function(event) {
@@ -177,23 +188,14 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
 
             var options = JSON.stringify($scope.anonymize);
 
-            var modalInstance = $modal.open({
-                templateUrl: 'processing.html'
-            });
+            angular.element('#processingModal').modal('show');
 
-            $http.post('/sitecore/admin/contentanonymizer/api/anonymize', { options: options }).
-                success(function (data, status, headers, config) {
-                    modalInstance.close();
-                    console.log('success');
-                }).
-                error(function (data, status, headers, config) {
-                    modalInstance.close();
-                    console.log('error');
-                });
+            $http.post('/sitecore/admin/contentanonymizer/api/anonymize', {
+                    options: options
+                }).then(function successCallback(response) {
+                    angular.element('#processingModal').modal('hide');
+                }, errorCallback);
 
             return true;
         };
-        
-        
-
     });
