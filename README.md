@@ -1,36 +1,36 @@
 # Sitecore Content Anonymizer Module Readme
 
-> Note: This module supports Sitecore 8.1+. For prior versions, please submit an Issue and I will try to add support.  You can also submit a pull request.
+> Note: This module supports Sitecore 8.1+. For prior versions, please submit an Issue, and I will try to add support.  You can also submit a pull request.
 
 ## Overview
 
 The Sitecore Content Anonymizer allows anonymization of the field values on items. 
-Anonymization is performed per template type on a field by field basis.
+Anonymization is performed per template type on a field-by-field basis.
 The Content Anonymizer allows administrators to anonymize data within Sitecore's content tree. 
 A few examples of how data can be anonymized are as follows:
 
-1. Paragraph text replaced with Lorem Ipsom text.
+1. Paragraph text replaced with Lorem Ipsum text.
 1. First and last names replaced with randomly selected names.
 1. Email addresses replaced with new addresses based on the randomly generated names.
 1. Dates replaced with randomly generated dates.
 
-There may be several reasons to anonymize data.
+There may be several reasons to anonymize data:
 
-1. Data from an existing client implementation  needs to be anonymized so it can be used for a demo.
-1. Data from live should not be brought down to development due to confidentiality.  The data can be anonymized.
+1. Data from an existing client implementation might need to be anonymized so it can be used for a demo.
+1. Data from live should not be brought down to development due to confidentiality.
 1. Data needs to be sent to Sitecore for support, but needs to be anonymized for confidentiality.
 
 ### Features
 
-Here are the key features of the Data Anonymizer.
+Here are the key features of the Data Anonymizer:
 
 1. Anonymize the values of fields on items based on the underlying template.
 1. Anonymization is applied to selected items of the selected template type.
 1. Only the latest version of the items are anonymized. **All prior versions of an item will be removed.**
 1. All language versions are anonymized.  Currently English based content will be used for some anonymization types.
 1. Only fields with an anonymization type selected will be anonymized.
-1. Only fields with inner values are anonymized.  Fields containing the standard value, default value, fallback value, or inherited value are not.
-1. 30+ out of the box field value anonymization formats
+1. Only fields with inner values are anonymized.  Fields containing the standard value, default value, fallback value or inherited value are not.
+1. 30+ out-of-the-box field value anonymization formats
 1. Basic custom field formats are supported.  This allows combining one or more field values into a string for use on another field.
 1. Item renaming based on custom fields is supported.  Items names will be updated to follow the configured Sitecore naming conventions.
 1. Global search and replace can be performed on all fields that are not flagged to be anonymized.
@@ -39,7 +39,7 @@ Here are the key features of the Data Anonymizer.
 
 ### Supported Fields
 
-The following field types and anonymization options are supported by the Data Anonymizer.
+The following field types and anonymization options are supported by the Data Anonymizer:
 
 * Date
     * Past
@@ -88,10 +88,10 @@ The following field types and anonymization options are supported by the Data An
     * Image
         * Random - Randomly chosen image.
 
-> Note: Other field types are not currently supported.  Relationship based fields such as Droplink and Multi-list, should be anonymized by anonymizing the related item.
+> Note: Other field types are not currently supported.  Relationship-based fields, such as Droplink and Multi-list, should be anonymized by anonymizing the related item.
 
 ### Cautions
-1. Only content you chose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.
+1. Only content you choose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.
 
 ## Installation
 
@@ -127,7 +127,7 @@ Select the template you desire.
 Once the template is chosen, additional options appear.
 
 ### Configure Search and Replace
-You can define a global search and replace for text based fields that are not chosen to be anonymized.
+You can define a global search and replace for text-based fields that are not chosen to be anonymized.
 If you need to add a search and replace, click the **Add** button.
 Click the Add button as many times as you need search and replace.
 The content entered in the **Replace** field is replaced with the content entered in the **With** field.
@@ -149,8 +149,8 @@ You need to specify the language that the custom format will use to populate the
 ![Configure Naming](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-naming.png)
 
 ### Configure Custom Formats
-Custom formats allow you to combine one or more value into a single string format.
-The resulting string can be used for text based fields or the name of the item.
+Custom formats allow you to combine one or more value(s) into a single string format.
+The resulting string can be used for text-based fields or the name of the item.
 
 If you need a custom format, click the **Add** button.
 Click Add as many times as you need custom formats.
@@ -178,9 +178,9 @@ An Example may be as follows for an email address related to person template:
 ![Configure Custom Formats](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-custom-formats.png)
 
 ### Configure Fields
-Choose what fields you want to anonymize by specifying the type of anonymization.
+Choose which fields you want to anonymize by specifying the type of anonymization.
 Fields that do not have a selected anonymization type will not be anonymized.
-Relationships remain as-is (Anonymize relationships be anonymizing the target template)
+Relationships remain as-is (Anonymize relationships by anonymizing the target template).
 
 ![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-fields.png)
 
@@ -198,7 +198,7 @@ You will see a confirmation dialog appear that summarizes the selections.
 
 ![Confirm](https://raw.github.com/onenorth/content-anonymizer/master/img/confirm.png)
 
-If everything looks ok, click the **Anonymize** button on the dialog.
+If everything looks okay, click the **Anonymize** button on the dialog.
 
 ## Development
 In order to develop, you must update the references to the Sitecore assemblies.
