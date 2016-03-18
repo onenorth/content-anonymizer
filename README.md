@@ -35,7 +35,7 @@ Here are the key features of the Data Anonymizer.
 1. Item renaming based on custom fields is supported.  Items names will be updated to follow the configured Sitecore naming conventions.
 1. Global search and replace can be performed on all fields that are not flagged to be anonymized.
 
-> Note: Anonymization is a destructive action.  It is recommended to back up the database(s) before anonymizing.
+> Note: Anonymization is a permanent action to your data.  It is recommended to back up the database(s) before anonymizing.
 
 ### Supported Fields
 
@@ -49,6 +49,13 @@ The following field types and anonymization options are supported by the Data An
     * Random
 * Single-Line Text | Multi-Line Text | Rich Text
     * Custom Format
+    * Lorem
+        * Replace
+        * Words
+        * Sentence
+        * Sentences
+        * Paragraph
+        * Paragraphs
     * Name
         * First
         * Last
@@ -65,13 +72,8 @@ The following field types and anonymization options are supported by the Data An
         * Past
         * Future
         * Recent
-    * Lorem
-        * Replace
-        * Words
-        * Sentence
-        * Sentences
-        * Paragraph
-        * Paragraphs
+    *Number
+        * Integer
     * Address
         * Street
         * City
