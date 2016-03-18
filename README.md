@@ -99,7 +99,12 @@ Install the update packages located here: https://github.com/onenorth/content-an
 
 ## Configuration
 
-There are no configuration files associated with this module.
+The Sitecore Content Anonymizer is dependent on the "sitecore_master_index" Lucene index.
+For the Anonymizer to process all items of a template type, the maximum number of items returned from a Lucene query needs to be increased.
+Set the following in a App_Config/Include .config file.
+Confirm the setting by viewing /sitecore/admin/showconfig.aspx
+
+    <setting patch:instead="*[@name='Query.MaxItems']" name="Query.MaxItems" value="0"/>
 
 ## Usage
 
