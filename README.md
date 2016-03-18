@@ -72,7 +72,7 @@ The following field types and anonymization options are supported by the Data An
         * Past
         * Future
         * Recent
-    *Number
+    * Number
         * Integer
     * Address
         * Street
