@@ -24,7 +24,7 @@ namespace OneNorth.ContentAnonymizer.Data
 
         public string Email(ILocale locale, string firstName = null, string lastName = null, string provider = null)
         {
-            provider = provider ?? locale.InternetFreeEmail.Random();
+            provider = provider ?? locale.InternetExampleEmail.Random();
             return UserName(locale, firstName, lastName) + "@" + provider;
         }
 
