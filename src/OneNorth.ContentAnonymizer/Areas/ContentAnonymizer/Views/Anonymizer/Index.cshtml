@@ -187,6 +187,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div ng-if="field.Type == 'Datetime'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="PastDateTime">Past</option>
+                                            <option value="FutureDateTime">Future</option>
+                                            <option value="RecentDateTime">Recent</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div ng-if="field.Type == 'Integer'">
                                     <div class="form-group">
                                         <select class="form-control" ng-model="field.Anonymize">

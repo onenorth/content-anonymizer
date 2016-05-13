@@ -16,6 +16,7 @@ namespace OneNorth.ContentAnonymizer.Data
 
         private readonly IAddress _address;
         private readonly IDate _date;
+        private readonly IDate _dateTime;
         private readonly IInternet _internet;
         private readonly ILorem _lorem;
         private readonly IMedia _media;
@@ -26,6 +27,7 @@ namespace OneNorth.ContentAnonymizer.Data
         private FieldAnonymizer() : this(
             Address.Instance,
             Date.Instance,
+            Datetime.Instance,
             Internet.Instance,
             Lorem.Instance,
             Media.Instance,
@@ -39,6 +41,7 @@ namespace OneNorth.ContentAnonymizer.Data
         internal FieldAnonymizer(
             IAddress address,
             IDate date,
+            IDate dateTime,
             IInternet internet,
             ILorem lorem,
             IMedia media,
@@ -48,6 +51,7 @@ namespace OneNorth.ContentAnonymizer.Data
         {
             _address = address;
             _date = date;
+            _dateTime = dateTime;
             _internet = internet;
             _lorem = lorem;
             _media = media;
@@ -96,6 +100,9 @@ namespace OneNorth.ContentAnonymizer.Data
                 case AnonymizeType.Future:
                     field.Value = DateUtil.ToIsoDate(_date.Future());
                     break;
+                case AnonymizeType.FutureDateTime:
+                    field.Value = DateUtil.ToIsoDate(_dateTime.Future());
+                    break;
                 case AnonymizeType.Image:
                     _media.Image(field, fieldInfo.Source.Path);
                     break;
@@ -125,6 +132,9 @@ namespace OneNorth.ContentAnonymizer.Data
                 case AnonymizeType.Past:
                     field.Value = DateUtil.ToIsoDate(_date.Past());
                     break;
+                case AnonymizeType.PastDateTime:
+                    field.Value = DateUtil.ToIsoDate(_dateTime.Past());
+                    break;
                 case AnonymizeType.Phone:
                     field.Value = _phone.PhoneNumber(locale);
                     break;
@@ -136,6 +146,9 @@ namespace OneNorth.ContentAnonymizer.Data
                     break;
                 case AnonymizeType.Recent:
                     field.Value = DateUtil.ToIsoDate(_date.Recent());
+                    break;
+                case AnonymizeType.RecentDateTime:
+                    field.Value = DateUtil.ToIsoDate(_dateTime.Recent());
                     break;
                 case AnonymizeType.Replace:
                     field.Value = _lorem.Replace(locale, field.Value);
