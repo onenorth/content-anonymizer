@@ -84,7 +84,8 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.getTemplates = function (filter) {
             return $http.get('/sitecore/admin/contentanonymizer/api/gettemplates', {
                 params: {
-                    filter: filter
+                    filter: filter,
+                    date: new Date().getTime()
                 }
             }).then(function successCallback(response) {
                 return response.data;
@@ -97,7 +98,8 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getfields', {
                     params: {
-                        templateId: $item.Id
+                        templateId: $item.Id,
+                        date: new Date().getTime()
                     }
                 }).then(function successCallback(response) {
                     $scope.anonymize.fields = response.data;
@@ -106,7 +108,8 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getitems', {
                     params: {
-                        templateId: $item.Id
+                        templateId: $item.Id,
+                        date: new Date().getTime()
                     }
                 }).then(function successCallback(response) {
                     $scope.anonymize.items = response.data;
@@ -114,7 +117,9 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 }, errorCallback);
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getlanguages', {
-                    params: { }
+                    params: {
+                        date: new Date().getTime()
+                    }
                 }).then(function successCallback(response) {
                     $scope.languages = response.data;
                 }, errorCallback);
@@ -172,7 +177,8 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.getMediaFolders = function (filter) {
             return $http.get('/sitecore/admin/contentanonymizer/api/getmediafolders', {
                 params: {
-                    filter: filter
+                    filter: filter,
+                    date: new Date().getTime()
                 }
             }).then(function successCallback(response) {
                 return response.data;
