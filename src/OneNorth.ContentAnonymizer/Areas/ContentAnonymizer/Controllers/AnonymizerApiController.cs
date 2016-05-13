@@ -41,7 +41,9 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
                 {
                     // if the filter is just a text item, then search for the value within the name
                     results = context.GetQueryable<SearchResultItem>()
-                        .Where(x => x.TemplateId == _templateTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en") && x.Name.Contains(filter))
+                        .Where(x => x.TemplateId == _templateTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en"))
+                        .ToList()
+                        .Where(x => x.Name.Contains(filter) || x.Path.Contains(filter))
                         .ToList();
                 }
             }
@@ -124,7 +126,9 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
             using (var context = index.CreateSearchContext())
             {
                 results = context.GetQueryable<SearchResultItem>()
-                    .Where(x => x.TemplateId == _mediaFolderTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en") && x.Name.Contains(filter))
+                    .Where(x => x.TemplateId == _mediaFolderTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en"))
+                    .ToList()
+                    .Where(x => x.Name.Contains(filter) || x.Path.Contains(filter))
                     .ToList();
             }
 
