@@ -55,7 +55,7 @@
                 </p>
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.template.$invalid }">
                     <label for="template" class="control-label" required>Template</label>
-                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Template" required />
+                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Search for Template Name e.g. 'people' or Template GUID" required />
                     <span ng-show="submitted && form.template.$invalid" class="help-block">Required</span>
                     <i ng-show="loadingTemplates" class="glyphicon glyphicon-refresh"></i>
                 </div>
