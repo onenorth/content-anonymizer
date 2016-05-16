@@ -20,7 +20,7 @@ namespace OneNorth.ContentAnonymizer.Data.Locales
         List<string> CompanyAdjective { get; }
         List<string> CompanyDescriptor { get; }
         List<string> CompanyNown { get; }
-        List<string> InternetFreeEmail { get; }
+        List<string> InternetExampleEmail { get; }
         List<string> InternetDomainSuffix { get; }
         List<string> LoremWords { get; }
         List<string> LoremSupplemental { get; }
