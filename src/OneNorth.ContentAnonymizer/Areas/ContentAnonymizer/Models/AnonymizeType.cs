@@ -26,7 +26,11 @@
         Past,
         Future,
         Recent,
-      
+
+        PastDateTime,
+        FutureDateTime,
+        RecentDateTime,
+
         Integer,
 
         // Lorem

@@ -55,7 +55,7 @@
                 </p>
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.template.$invalid }">
                     <label for="template" class="control-label" required>Template</label>
-                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Template" required />
+                    <input type="text" class="form-control" name="template" ng-model="anonymize.template" id="template" typeahead="template as template.Path for template in getTemplates($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" typeahead-loading="loadingTemplates" typeahead-on-select="onTemplateSelect($item, $model, $label)" placeholder="Search for Template Name e.g. 'people' or Template GUID" required />
                     <span ng-show="submitted && form.template.$invalid" class="help-block">Required</span>
                     <i ng-show="loadingTemplates" class="glyphicon glyphicon-refresh"></i>
                 </div>
@@ -187,6 +187,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div ng-if="field.Type == 'Datetime'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="field.Anonymize">
+                                            <option value="None"></option>
+                                            <option value="PastDateTime">Past</option>
+                                            <option value="FutureDateTime">Future</option>
+                                            <option value="RecentDateTime">Recent</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div ng-if="field.Type == 'Integer'">
                                     <div class="form-group">
                                         <select class="form-control" ng-model="field.Anonymize">
@@ -267,7 +277,7 @@
                                     </div>
                                     <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.filemediafolder.$invalid }" ng-if="field.Anonymize == 'File'">
                                         <label for="filemediafolder" class="control-label">Parent Media Folder</label>
-                                        <input type="text" class="form-control" name="filemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'File'" />
+                                        <input type="text" class="form-control" name="filemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Search for File Folder e.g. 'documents'" ng-required="field.Anonymize == 'File'" />
                                         <span ng-show="submitted && fieldform.filemediafolder.$invalid" class="help-block">Required</span>
                                     </div>
                                 </div>
@@ -280,7 +290,7 @@
                                     </div>
                                     <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.imagemediafolder.$invalid }" ng-if="field.Anonymize == 'Image'">
                                         <label for="imagemediafolder" class="control-label">Parent Media Folder</label>
-                                        <input type="text" class="form-control" name="imagemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Folder" ng-required="field.Anonymize == 'Image'" />
+                                        <input type="text" class="form-control" name="imagemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Search for Media Folder e.g. 'images'" ng-required="field.Anonymize == 'Image'" />
                                         <span ng-show="submitted && fieldform.imagemediafolder.$invalid" class="help-block">Required</span>
                                     </div>
                                 </div>

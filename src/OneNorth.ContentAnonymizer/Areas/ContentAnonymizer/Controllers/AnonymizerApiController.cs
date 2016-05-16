@@ -28,9 +28,24 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
             List<SearchResultItem> results;
             using (var context = index.CreateSearchContext())
             {
-                results = context.GetQueryable<SearchResultItem>()
-                    .Where(x => x.TemplateId == _templateTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en") && x.Name.Contains(filter))
-                    .ToList();
+                ID directIdMatch;
+
+                if (ID.TryParse(filter, out directIdMatch))
+                {
+                    // if there is a guid passed into the search filter, then directly search for the item
+                    results = context.GetQueryable<SearchResultItem>()
+                        .Where(x => x.TemplateId == _templateTemplateId && x.ItemId == directIdMatch)
+                        .ToList();
+                }
+                else
+                {
+                    // if the filter is just a text item, then search for the value within the name
+                    results = context.GetQueryable<SearchResultItem>()
+                        .Where(x => x.TemplateId == _templateTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en"))
+                        .ToList()
+                        .Where(x => x.Name.Contains(filter) || x.Path.Contains(filter))
+                        .ToList();
+                }
             }
 
             var items = results
@@ -111,7 +126,9 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
             using (var context = index.CreateSearchContext())
             {
                 results = context.GetQueryable<SearchResultItem>()
-                    .Where(x => x.TemplateId == _mediaFolderTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en") && x.Name.Contains(filter))
+                    .Where(x => x.TemplateId == _mediaFolderTemplateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language.Equals("en"))
+                    .ToList()
+                    .Where(x => x.Name.Contains(filter) || x.Path.Contains(filter))
                     .ToList();
             }
 
