@@ -44,7 +44,12 @@
                 <li>Items can be chosen for anonymization.</li>
             </ul>
         </p>
-
+        <div class="alert alert-warning" role="alert">
+            <strong>Note:</strong>
+            The Content Anonymizer relies on the <strong>sitecore_master_index</strong> Lucene index.
+            Please make sure this index is up to date.
+            Rebuild the index if necessary.
+        </div>
         <div class="panel panel-primary">
             <div class="panel-heading">Select Template</div>
             <div class="panel-body">
@@ -52,6 +57,7 @@
                     Choose the template you want to anonymize.
                     Items based on this template will be anonymized.
                     Start typing the template name and you will be presented with the available templates.
+                    If no templates appear, make sure the sitecore_master_index is up to date.
                 </p>
                 <div class="form-group" ng-class="{ 'has-error': submitted && form.template.$invalid }">
                     <label for="template" class="control-label" required>Template</label>
@@ -184,6 +190,10 @@
                                             <option value="Past">Past</option>
                                             <option value="Future">Future</option>
                                             <option value="Recent">Recent</option>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                 </div>
@@ -194,6 +204,10 @@
                                             <option value="PastDateTime">Past</option>
                                             <option value="FutureDateTime">Future</option>
                                             <option value="RecentDateTime">Recent</option>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                 </div>
@@ -202,6 +216,10 @@
                                         <select class="form-control" ng-model="field.Anonymize">
                                             <option value="None"></option>
                                             <option value="Integer">Integer</option>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                 </div>
@@ -211,12 +229,12 @@
                                             <option value="None"></option>
                                             <option value="Custom">Custom Format</option>
                                             <optgroup label="Lorem">
-                                                <option value="Replace">Replace</option>
-                                                <option value="Words">Words</option>
-                                                <option value="Sentence">Sentence</option>
-                                                <option value="Sentences">Sentences</option>
-                                                <option value="Paragraph">Paragraph</option>
-                                                <option value="Paragraphs">Paragraphs</option>
+                                                <option value="Replace">Replace (Replace each word with lorem word)</option>
+                                                <option value="Words">Words (Replace all with X words)</option>
+                                                <option value="Sentence">Sentence (Replace all with 1 sentence)</option>
+                                                <option value="Sentences">Sentences (Replace all with X sentences)</option>
+                                                <option value="Paragraph">Paragraph (Replace all with 1 paragraph)</option>
+                                                <option value="Paragraphs">Paragraphs (Replace all with X paragraphs)</option>
                                             </optgroup>
                                             <optgroup label="Name">
                                                 <option value="FirstName">First</option>
@@ -252,6 +270,10 @@
                                                 <option value="Longitude">Longitude</option>
                                                 <option value="Coordinates">Coordinates</option>
                                             </optgroup>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                     <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.format.$invalid }" ng-if="field.Anonymize == 'Custom'">
@@ -273,6 +295,10 @@
                                         <select class="form-control" ng-model="field.Anonymize">
                                             <option value="None"></option>
                                             <option value="File">File</option>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                     <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.filemediafolder.$invalid }" ng-if="field.Anonymize == 'File'">
@@ -286,6 +312,10 @@
                                         <select class="form-control" ng-model="field.Anonymize">
                                             <option value="None"></option>
                                             <option value="Image">Image</option>
+                                            <optgroup label="Reset">
+                                                <option value="Clear">Blank</option>
+                                                <option value="Reset">Standard Value</option>
+                                            </optgroup>
                                         </select>
                                     </div>
                                     <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.imagemediafolder.$invalid }" ng-if="field.Anonymize == 'Image'">
