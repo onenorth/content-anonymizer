@@ -1458,16 +1458,17 @@ namespace OneNorth.ContentAnonymizer.Data.Locales
                 "workforce"
             };
 
-        public List<string> InternetFreeEmail
+        public List<string> InternetExampleEmail
         {
-            get { return _internetFreeEmail; }
+            get { return _internetExampleEmail; }
         }
 
-        private readonly List<string> _internetFreeEmail = new List<string>
+        private readonly List<string> _internetExampleEmail = new List<string>
             {
-                "gmail.com",
-                "yahoo.com",
-                "hotmail.com"
+                "example.com",
+                "example.net",
+                "example.org",
+                "example.edu"
             };
 
         public List<string> InternetDomainSuffix
