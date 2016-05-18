@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {1416AE68-607C-445A-9690-9C7C4A555671}
+database: core
+path: /sitecore/content/Documents and settings/sitecore_admin/Start menu/Right/Demo Data Tools/Content Anonymizer
+parent: {792CBEA3-0526-4CE0-AFCA-622117E5448A}
+name: Content Anonymizer
+master: {00000000-0000-0000-0000-000000000000}
+template: {72450C9C-98C4-4117-88B7-573110C7E0C0}
+templatekey: Application shortcut
+
+----field----
+field: {8A1AC797-0304-4C50-AAAC-4D9DBBFF435F}
+name: Application
+key: application
+content-length: 117
+
+<link text="Content Anonymizer" linktype="internal" url="/Applications/Content Anonymizer" anchor="" target="_blank">
+----version----
+language: en
+version: 1
+revision: b930d4cc-ea9e-43a6-8486-fc0b1a2751e3
+
+----field----
+field: {C032DB76-CC34-4F8F-BE2D-D2FB35237AAB}
+name: Display name
+key: display name
+content-length: 18
+
+Content Anonymizer
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160413T133218Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b930d4cc-ea9e-43a6-8486-fc0b1a2751e3
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160512T211914Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
