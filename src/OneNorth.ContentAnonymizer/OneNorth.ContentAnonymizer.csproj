@@ -165,6 +165,7 @@
     <Content Include="Areas\ContentAnonymizer\Content\anonymizer.css" />
     <Content Include="Areas\ContentAnonymizer\Content\bootstrap-theme.min.css" />
     <Content Include="Areas\ContentAnonymizer\Content\bootstrap.min.css" />
+    <Content Include="Areas\ContentAnonymizer\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\ContentAnonymizer\Scripts\angular.min.js" />
     <Content Include="Areas\ContentAnonymizer\Scripts\bootstrap.min.js" />
     <Content Include="Areas\ContentAnonymizer\Scripts\anonymizer.js" />
@@ -186,6 +187,10 @@
     <Content Include="Areas\ContentAnonymizer\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\ContentAnonymizer\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\ContentAnonymizer\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\ContentAnonymizer\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\ContentAnonymizer\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

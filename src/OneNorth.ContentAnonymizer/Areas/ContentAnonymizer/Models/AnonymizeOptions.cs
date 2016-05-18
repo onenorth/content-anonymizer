@@ -12,7 +12,8 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Models
         public LanguageInfo NameLanguage { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public AnonymizeType Rename { get; set; }
-        public List<Replacement> Replacements { get; set; } 
+        public List<Replacement> Replacements { get; set; }
+        public List<FieldInfo> StandardFields { get; set; }
         public TemplateInfo Template { get; set; }
     }
 }

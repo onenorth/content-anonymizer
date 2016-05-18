@@ -73,6 +73,22 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
             return Content(content, "application/json");
         }
 
+        public ActionResult GetStandardFields(string templateId)
+        {
+            var database = Database.GetDatabase("master");
+            if (database == null)
+                throw new ApplicationException("master database not found");
+
+            var template = database.GetTemplate(new ID(templateId));
+
+            var fields = template.Fields.Where(x => x.Name.StartsWith("__"))
+                                 .Select(x => new FieldInfo { Anonymize = AnonymizeType.None, DisplayName = x.DisplayName, Id = x.ID.ToGuid(), Name = x.Name, Type = x.Type })
+                                 .OrderBy(x => x.DisplayName);
+
+            var content = JsonConvert.SerializeObject(fields);
+            return Content(content, "application/json");
+        }
+
         public JsonResult GetItems(string templateId)
         {
             var index = ContentSearchManager.GetIndex("sitecore_master_index");
