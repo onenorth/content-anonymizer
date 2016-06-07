@@ -76,6 +76,9 @@ namespace OneNorth.ContentAnonymizer.Data
                 case AnonymizeType.City:
                     field.Value = _address.City(locale);
                     break;
+                case AnonymizeType.Clear:
+                    field.Value = "";
+                    break;
                 case AnonymizeType.Country:
                     field.Value = _address.Country(locale);
                     break;
@@ -152,6 +155,9 @@ namespace OneNorth.ContentAnonymizer.Data
                     break;
                 case AnonymizeType.Replace:
                     field.Value = _lorem.Replace(locale, field.Value);
+                    break;
+                case AnonymizeType.Reset:
+                    field.Reset();
                     break;
                 case AnonymizeType.Sentence:
                     field.Value = _lorem.Sentence(locale);

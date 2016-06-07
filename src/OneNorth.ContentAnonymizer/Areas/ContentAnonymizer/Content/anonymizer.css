@@ -5,3 +5,17 @@
 @media screen and (min-width: 992px) {
 	#customFormatModal .modal-dialog  {width:900px;}
 }
+
+.panel-group .panel-heading a {
+  text-decoration: none;
+}
+.panel-group .panel-heading a:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+}
+.panel-group .panel-heading a.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";
+}

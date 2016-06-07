@@ -6,12 +6,14 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         $scope.anonymize.template = null;
         $scope.currentField = null;
         $scope.fields = {};
+        $scope.standardFields = {};
         $scope.items = {};
         $scope.languages = {};
         $scope.submitted = true; // Set this to false to initially hide validation errors
 
         $scope.init = function () {
             $scope.anonymize.fields = [];
+            $scope.anonymize.standardFields = [];
             //$scope.anonymize.formats = [{ format: "$0", tokens: [{ field: null }] }];
             $scope.anonymize.formats = [];
             $scope.anonymize.items = [];
@@ -29,6 +31,10 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
             $scope.fields.currentPage = 1;
             $scope.fields.itemsPerPage = 10;
 
+            $scope.standardFields.filtered = [];
+            $scope.standardFields.currentPage = 1;
+            $scope.standardFields.itemsPerPage = 10;
+
             $scope.items.filtered = [];
             $scope.items.currentPage = 1;
             $scope.items.itemsPerPage = 100;
@@ -39,6 +45,12 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
             var begin = (($scope.fields.currentPage - 1) * $scope.fields.itemsPerPage);
             var end = begin + $scope.fields.itemsPerPage;
             $scope.fields.filtered = $scope.anonymize.fields.slice(begin, end);
+        };
+
+        $scope.sliceStandardFields = function () {
+            var begin = (($scope.standardFields.currentPage - 1) * $scope.standardFields.itemsPerPage);
+            var end = begin + $scope.standardFields.itemsPerPage;
+            $scope.standardFields.filtered = $scope.anonymize.standardFields.slice(begin, end);
         };
 
         $scope.sliceItems = function () {
@@ -104,6 +116,16 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 }).then(function successCallback(response) {
                     $scope.anonymize.fields = response.data;
                     $scope.sliceFields();
+                }, errorCallback);
+
+                $http.get('/sitecore/admin/contentanonymizer/api/getstandardfields', {
+                    params: {
+                        templateId: $item.Id,
+                        date: new Date().getTime()
+                    }
+                }).then(function successCallback(response) {
+                    $scope.anonymize.standardFields = response.data;
+                    $scope.sliceStandardFields();
                 }, errorCallback);
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getitems', {

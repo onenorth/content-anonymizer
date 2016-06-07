@@ -6,6 +6,10 @@
         None,
         Custom,
 
+        // Reset
+        Clear, // Empty
+        Reset, // Standard Value
+
         // Name
         FirstName,
         LastName,
