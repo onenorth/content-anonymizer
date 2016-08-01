@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/bootstrap.min.css">
     @*<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">*@
     <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/anonymizer.css">
+    <link rel="stylesheet" href="~/Areas/ContentAnonymizer/Content/anonymizer.css?v=@DateTime.Today.Ticks">
 
     @*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
     <script src="~/Areas/ContentAnonymizer/Scripts/jquery-1.11.0.min.js"></script>
@@ -24,7 +24,7 @@
     <script src="~/Areas/ContentAnonymizer/Scripts/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="~/Areas/ContentAnonymizer/Scripts/format.js"></script>
 
-    <script src="~/Areas/ContentAnonymizer/Scripts/anonymizer.js"></script>
+    <script src="~/Areas/ContentAnonymizer/Scripts/anonymizer.js?v=@DateTime.Today.Ticks"></script>
 </head>
 <body ng-controller="anonymizerController">
 <div class="container" ng-form="form">
