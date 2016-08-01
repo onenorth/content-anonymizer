@@ -200,7 +200,7 @@
                         Anonymize relationships by anonymizing the target template.
                     </p>
                     <div class="alert alert-warning" role="alert">
-                        <strong>Note:</strong> Only fields that are already populated will be anonymized.
+                        <strong>Note:</strong> By default, only fields that are already populated will be anonymized.
                     </div>
                     <table class="table">
                         <thead>
@@ -337,6 +337,7 @@
                                             <label for="filemediafolder" class="control-label">Parent Media Folder</label>
                                             <input type="text" class="form-control" name="filemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Search for File Folder e.g. 'documents'" ng-required="field.Anonymize == 'File'" />
                                             <span ng-show="submitted && fieldform.filemediafolder.$invalid" class="help-block">Required</span>
+                                            <label class="control-label">Anonymize Empty Values<input style="width:34px;" type="checkbox" class="form-control" name="filemediaoverwrite" ng-model="field.overwriteemptyvalues" /></label>
                                         </div>
                                     </div>
                                     <div ng-if="field.Type == 'Image'">
@@ -354,6 +355,7 @@
                                             <label for="imagemediafolder" class="control-label">Parent Media Folder</label>
                                             <input type="text" class="form-control" name="imagemediafolder" ng-model="field.source" typeahead="folder as folder.Path for folder in getMediaFolders($viewValue)" typeahead-editable="false" typeahead-min-length="3" typeahead-wait-ms="300" placeholder="Search for Media Folder e.g. 'images'" ng-required="field.Anonymize == 'Image'" />
                                             <span ng-show="submitted && fieldform.imagemediafolder.$invalid" class="help-block">Required</span>
+                                            <label class="control-label">Anonymize Empty Values<input  style="width:34px;" type="checkbox" class="form-control" name="imagemediaoverwrite" ng-model="field.overwriteemptyvalues" /></label>
                                         </div>
                                     </div>
                                     <div ng-if="field.Type == 'ItemAggregate'"></div>
