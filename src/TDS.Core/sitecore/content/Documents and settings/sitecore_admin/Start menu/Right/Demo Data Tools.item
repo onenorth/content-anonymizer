@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {792CBEA3-0526-4CE0-AFCA-622117E5448A}
+database: core
+path: /sitecore/content/Documents and settings/sitecore_admin/Start menu/Right/Demo Data Tools
+parent: {7EFA6C46-8784-46CA-995E-E2FF41D56611}
+name: Demo Data Tools
+master: {00000000-0000-0000-0000-000000000000}
+template: {579BAD93-BFEF-43E0-9A2E-C3FF30B87987}
+templatekey: Start menu folder
+
+----field----
+field: {092E08F3-8863-40B1-A17C-EF10351AA4F6}
+name: Icon
+key: icon
+content-length: 32
+
+Applications/32x32/gears_run.png
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 32
+
+Applications/32x32/gears_run.png
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+100
+----version----
+language: en
+version: 1
+revision: 1bf9e17b-2218-4959-9f35-2de55d216d88
+
+----field----
+field: {B27C8AC7-1044-4911-BFB3-F38A9703B93F}
+name: Display name
+key: display name
+content-length: 15
+
+Demo Data Tools
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160512T211626Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+1bf9e17b-2218-4959-9f35-2de55d216d88
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160512T212731Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

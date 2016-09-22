@@ -19,16 +19,16 @@ namespace OneNorth.ContentAnonymizer.Data
             
         }
 
-        public void File(FileField field, string parentPath)
+        public void File(FileField field, Sitecore.Globalization.Language language, string parentPath, bool overwriteEmptyValues)
         {
-            if (string.IsNullOrEmpty(field.Value))
+            if (!overwriteEmptyValues && string.IsNullOrEmpty(field.Value))
                 return;
 
             var mediaItem = field.MediaItem;
-            if (mediaItem == null)
+            if (!overwriteEmptyValues && mediaItem == null)
                 return;
 
-            mediaItem = GetRandomMediaItem(mediaItem, parentPath);
+            mediaItem = GetRandomMediaItem(mediaItem, language, parentPath);
             if (mediaItem == null)
                 return;
 
@@ -37,16 +37,16 @@ namespace OneNorth.ContentAnonymizer.Data
             field.Src = MediaManager.GetMediaUrl(mediaItem, shellOptions);
         }
 
-        public void Image(ImageField field, string parentPath)
+        public void Image(ImageField field, Sitecore.Globalization.Language language, string parentPath, bool overwriteEmptyValues)
         {
-            if (string.IsNullOrEmpty(field.Value))
+            if (!overwriteEmptyValues && string.IsNullOrEmpty(field.Value))
                 return;
 
             var mediaItem = field.MediaItem;
-            if (mediaItem == null)
+            if (!overwriteEmptyValues && mediaItem == null)
                 return;
 
-            mediaItem = GetRandomMediaItem(mediaItem, parentPath);
+            mediaItem = GetRandomMediaItem(mediaItem, language, parentPath);
             if (mediaItem == null)
                 return;
 
@@ -54,26 +54,47 @@ namespace OneNorth.ContentAnonymizer.Data
             field.SetAttribute("showineditor", "1");
         }
 
-        private static MediaItem GetRandomMediaItem(MediaItem currentMediaItem, string parentPath)
+        private static MediaItem GetRandomMediaItem(MediaItem currentMediaItem, Sitecore.Globalization.Language language, string parentPath)
         {
             var index = ContentSearchManager.GetIndex("sitecore_master_index");
             if (index == null)
                 throw new ApplicationException("sitecore_master_index not found");
 
-            var item = (Item) currentMediaItem;
-            var templateId = item.TemplateID;
-            var language = item.Language.Name;
+            var searchResultItems = new List<SearchResultItem>();
 
-            List<SearchResultItem> searchResultItems;
-            using (var context = index.CreateSearchContext())
+            var item = (Item) currentMediaItem;
+            if (item != null)
             {
-                searchResultItems = context.GetQueryable<SearchResultItem>()
-                    .Where(x => x.TemplateId == templateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language == language)
-                    .ToList();
+                var templateId = item.TemplateID;
+                var languageName = item.Language.Name;
+
+                using (var context = index.CreateSearchContext())
+                {
+                    searchResultItems = context.GetQueryable<SearchResultItem>()
+                        .Where(x => x.TemplateId == templateId && x[BuiltinFields.LatestVersion].Equals("1") && x.Language == languageName)
+                        .ToList();
+                }
+
+                // Filter based on path
+                searchResultItems = searchResultItems.Where(x => x.Path.StartsWith(parentPath)).ToList();
             }
 
-            // Filter based on path
-            searchResultItems = searchResultItems.Where(x => x.Path.StartsWith(parentPath)).ToList();
+            if (searchResultItems.Count == 0)
+            {
+                // TODO: Make the image template configurable. This only finds images that use template: /sitecore/templates/System/Media/Unversioned/Image/.
+                var unversionedImage = Sitecore.Data.ID.Parse("F1828A2C-7E5D-4BBD-98CA-320474871548");
+                var languageName = language.Name;
+
+                using (var context = index.CreateSearchContext())
+                {
+                    searchResultItems = context.GetQueryable<SearchResultItem>()
+                        .Where(x => x.TemplateId == unversionedImage && x[BuiltinFields.LatestVersion].Equals("1") && x.Language == languageName)
+                        .ToList();
+                }
+
+                // Filter based on path
+                searchResultItems = searchResultItems.Where(x => x.Path.StartsWith(parentPath)).ToList();
+            }
 
             var searchResultItem = searchResultItems.Random();
             item = searchResultItem.GetItem();

@@ -68,7 +68,7 @@ namespace OneNorth.ContentAnonymizer.Data
 
             // Only anonymize fields that have an inner value.
             var value = field.GetValue(false, false, false, false);
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value) && !fieldInfo.OverwriteEmptyValues)
                 return;
 
             switch (fieldInfo.Anonymize)
@@ -95,7 +95,7 @@ namespace OneNorth.ContentAnonymizer.Data
                     field.Value = _phone.FaxNumber(locale);
                     break;
                 case AnonymizeType.File:
-                    _media.File(field, fieldInfo.Source.Path);
+                    _media.File(field, item.Language, fieldInfo.Source.Path, fieldInfo.OverwriteEmptyValues);
                     break;
                 case AnonymizeType.FirstName:
                     field.Value = _name.FirstName(locale, field.Value);
@@ -107,7 +107,7 @@ namespace OneNorth.ContentAnonymizer.Data
                     field.Value = DateUtil.ToIsoDate(_dateTime.Future());
                     break;
                 case AnonymizeType.Image:
-                    _media.Image(field, fieldInfo.Source.Path);
+                    _media.Image(field, item.Language, fieldInfo.Source.Path, fieldInfo.OverwriteEmptyValues);
                     break;
                 case AnonymizeType.Integer:
                     field.Value = _number.Integer().ToString(CultureInfo.InvariantCulture);

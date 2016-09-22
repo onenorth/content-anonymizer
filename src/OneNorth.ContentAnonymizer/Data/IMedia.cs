@@ -4,7 +4,7 @@ namespace OneNorth.ContentAnonymizer.Data
 {
     public interface IMedia
     {
-        void File(FileField field, string parentPath);
-        void Image(ImageField field, string parentPath);
+        void File(FileField field, Sitecore.Globalization.Language language, string parentPath, bool overwriteEmptyValues);
+        void Image(ImageField field, Sitecore.Globalization.Language language, string parentPath, bool overwriteEmptyValues);
     }
 }
