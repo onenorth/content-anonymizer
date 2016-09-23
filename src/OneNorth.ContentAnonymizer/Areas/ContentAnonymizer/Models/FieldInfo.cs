@@ -14,5 +14,6 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Models
         public string Name { get; set; }
         public ItemInfo Source { get; set; }
         public string Type { get; set; }
+        public bool OverwriteEmptyValues { get; set; }
     }
 }
