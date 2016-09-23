@@ -181,8 +181,15 @@ An Example may be as follows for an email address related to person template:
 Choose which fields you want to anonymize by specifying the type of anonymization.
 Fields that do not have a selected anonymization type will not be anonymized.
 Relationships remain as-is (Anonymize relationships by anonymizing the target template).
+You can optionally anonymize fields that are currently empty by selecting the **Anonymize Empty Values** checkbox.
 
 ![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-fields.png)
+
+### Configure Standard Fields
+Choose which standard fields you want to anonymize by specifying the type of anonymization.
+This functionality is the same as for configuring normal fields.
+
+![Configure Fields](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-standardfields.png)
 
 ### Select Items
 Choose which items you want to anonymize.
