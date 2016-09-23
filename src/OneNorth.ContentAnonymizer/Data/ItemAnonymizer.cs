@@ -43,12 +43,16 @@ namespace OneNorth.ContentAnonymizer.Data
                 foreach (var fieldInfo in options.Fields.Where(x => x.Anonymize != AnonymizeType.Custom))
                     _fieldAnonymizer.AnonymizeField(fieldInfo, item, options, locale);
 
-                // Process all standardfields
-                foreach (var fieldInfo in options.StandardFields)
+                // Process all standardfields that are not custom.
+                foreach (var fieldInfo in options.StandardFields.Where(x => x.Anonymize != AnonymizeType.Custom))
                     _fieldAnonymizer.AnonymizeField(fieldInfo, item, options, locale);
 
                 // Custom Values - Perform Custom format last as it is dependent on the non-custom fields
                 foreach (var fieldInfo in options.Fields.Where(x => x.Anonymize == AnonymizeType.Custom))
+                    _fieldAnonymizer.AnonymizeCustomField(fieldInfo, item);
+
+                // Custom Values - Perform Custom format last as it is dependent on the non-custom fields
+                foreach (var fieldInfo in options.StandardFields.Where(x => x.Anonymize == AnonymizeType.Custom))
                     _fieldAnonymizer.AnonymizeCustomField(fieldInfo, item);
 
                 // Name - Perform rename last as it is dependent on the fields.  Only rename using the chosen language
