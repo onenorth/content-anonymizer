@@ -197,7 +197,7 @@ namespace OneNorth.ContentAnonymizer.Data
 
             // Only anonymize fields that have an inner value.
             var fieldValue = field.GetValue(false, false, false, false);
-            if (string.IsNullOrEmpty(fieldValue))
+            if (string.IsNullOrEmpty(fieldValue) && !fieldInfo.OverwriteEmptyValues)
                 return;
 
             if (fieldInfo.Anonymize != AnonymizeType.Custom)
