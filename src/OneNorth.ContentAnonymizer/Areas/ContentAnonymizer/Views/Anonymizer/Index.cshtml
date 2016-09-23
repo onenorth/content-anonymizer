@@ -397,14 +397,38 @@
                                 <td>{{field.DisplayName}}</td>
                                 <td>{{field.Type}}</td>
                                 <td>
-                                    <div class="form-group">
-                                        <select class="form-control" ng-model="field.Anonymize">
-                                            <option value="None"></option>
-                                            <optgroup label="Reset">
-                                                <option value="Clear">Blank</option>
-                                                <option value="Reset">Standard Value</option>
-                                            </optgroup>
-                                        </select>
+                                    <div ng-if="field.Type == 'text'">
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="field.Anonymize">
+                                                <option value="None"></option>
+                                                <option value="Custom">Custom Format</option>
+                                                <optgroup label="Reset">
+                                                    <option value="Clear">Blank</option>
+                                                    <option value="Reset">Standard Value</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" ng-class="{ 'has-error': submitted && fieldform.format.$invalid }" ng-if="field.Anonymize == 'Custom'">
+                                            <label for="format" class="control-label">Format</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="format" ng-model="field.Format" id="format" typeahead="format as format.name for format in anonymize.formats | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Format" ng-required="field.Anonymize == 'Custom'" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#customFormatModal" ng-click="setCurrentField(field)">...</button>
+                                                </span>
+                                            </div>
+                                            <span ng-show="submitted && fieldform.format.$invalid" class="help-block">Required</span>
+                                        </div>
+                                    </div>
+                                    <div ng-if="field.Type != 'text'">
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="field.Anonymize">
+                                                <option value="None"></option>
+                                                <optgroup label="Reset">
+                                                    <option value="Clear">Blank</option>
+                                                    <option value="Reset">Standard Value</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
