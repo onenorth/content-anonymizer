@@ -106,7 +106,9 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
         
         $scope.onTemplateSelect = function ($item, $model, $label) {
             if ($item.Id) {
+                var formats = $scope.anonymize.formats;
                 $scope.init();
+                $scope.anonymize.formats = formats;
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getfields', {
                     params: {
@@ -116,6 +118,7 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 }).then(function successCallback(response) {
                     $scope.anonymize.fields = response.data;
                     $scope.sliceFields();
+                    $scope.checkFormats();
                 }, errorCallback);
 
                 $http.get('/sitecore/admin/contentanonymizer/api/getstandardfields', {
@@ -147,6 +150,30 @@ angular.module("anonymizer", ['ui.bootstrap','ui.format'])
                 }, errorCallback);
             }
         };
+
+        $scope.checkFormats = function () {
+            var fieldIds = $scope.anonymize.fields.map(function (x) { return x.Id; });
+            $scope.anonymize.formats.forEach(function (format) {
+                var allFound = (fieldIds.length > 0);
+                format.tokens.forEach(function (token) {
+                    if (allFound === false) return;
+
+                    var foundToken = false;
+
+                    fieldIds.forEach(function (fieldId) {
+                        if (fieldId === token.field.Id) {
+                            foundToken = true;
+                            return;
+                        }
+                    });
+
+                    if (!foundToken) {
+                        allFound = false;
+                    }
+                });
+                format.fieldsMissing = !allFound;
+            });
+        }
 
         $scope.getFields = function(query) {
             return $scope.anonymize.fields;
