@@ -536,7 +536,7 @@
                         <div class="col-sm-2">
                             <div class="form-group" ng-class="{ 'has-error': submitted && formatform.name.$invalid }">
                                 <label for="name" class="control-label">Name</label>
-                                <input type="text" name="name" ng-model="format.name" class="form-control" required>
+                                <input type="text" name="name" ng-model="format.name" ng-disabled="format.fieldsMissing" class="form-control" required>
                                 <span ng-show="submitted && formatform.name.$error.required" class="help-block">Required</span>
                             </div>
                         </div>
@@ -546,28 +546,28 @@
                                 <div ng-form="tokenform" data-ng-repeat="token in format.tokens" ng-class="{ 'has-error': submitted && tokenform.field.$invalid }">
                                     <div class="input-group">
                                         <span class="input-group-addon">${{$index}}</span>
-                                        <input type="text" name="field" ng-model="token.field" typeahead="field as field.Name for field in anonymize.fields | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Field" class="form-control" required>
+                                        <input type="text" name="field" ng-model="token.field" ng-disabled="format.fieldsMissing" typeahead="field as field.Name for field in anonymize.fields | filter:$viewValue | limitTo:8" typeahead-editable="false" placeholder="Field" class="form-control" required>
                                         <span class="input-group-btn">
                                             <button type="button" class="close" aria-label="Close" ng-click="removeToken($index,format)"><span aria-hidden="true">&times;</span></button>
                                         </span>
                                     </div>
                                     <span ng-show="submitted && tokenform.field.$invalid" class="help-block">Required</span>
                                 </div>
-                                <button type="button" class="btn btn-default" ng-click="addToken(format)">Add</button>
+                                <button type="button" class="btn btn-default" ng-disabled="format.fieldsMissing" ng-click="addToken(format)">Add</button>
 
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group" ng-class="{ 'has-error': submitted && formatform.format.$invalid }">
                                 <label for="format" class="control-label">Format</label>
-                                <input type="text" name="format" ng-model="format.format" class="form-control" required>
+                                <input type="text" name="format" ng-model="format.format" ng-disabled="format.fieldsMissing" class="form-control" required>
                                 <span ng-show="submitted && formatform.format.$error.required" class="help-block">Required</span>
                                 <pre>Result: {{format.format | format : format.tokennames }}</pre>
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <button type="button" class="close pull-right" aria-label="Close" ng-click="removeFormat($index)"><span aria-hidden="true">&times;</span></button>
-                            <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-click="selectFormat(format)">Select</button>
+                            <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-disabled="format.fieldsMissing" ng-click="selectFormat(format)">Select</button>
                         </div>
                     </div>
                     <div class="row">
