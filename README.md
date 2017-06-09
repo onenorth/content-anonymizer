@@ -26,11 +26,11 @@ Here are the key features of the Data Anonymizer:
 
 1. Anonymize the values of fields on items based on the underlying template.
 1. Anonymization is applied to selected items of the selected template type.
-1. Only the latest version of the items are anonymized. **All prior versions of an item will be removed.**
+1. Only the latest version of the items are anonymized. **All prior versions of an item will be removed and the version number will be reset to 1**
 1. All language versions are anonymized.  Currently English based content will be used for some anonymization types.
 1. Only fields with an anonymization type selected will be anonymized.
-1. Only fields with inner values are anonymized.  Fields containing the standard value, default value, fallback value or inherited value are not.
-1. 30+ out-of-the-box field value anonymization formats
+1. Fields that are are currently empty can be optionally filled with anonymized data.
+1. 30+ out-of-the-box field value anonymization formats.
 1. Basic custom field formats are supported.  This allows combining one or more field values into a string for use on another field.
 1. Item renaming based on custom fields is supported.  Items names will be updated to follow the configured Sitecore naming conventions.
 1. Global search and replace can be performed on all fields that are not flagged to be anonymized.
@@ -59,6 +59,7 @@ The following field types and anonymization options are supported by the Data An
     * Name
         * First
         * Last
+        * Prefix
         * Suffix
     * Phone
         * Phone
@@ -83,15 +84,15 @@ The following field types and anonymization options are supported by the Data An
         * Latitude
         * Longitude
         * Coordinates
-    * File
-        * Random - Randomly chosen media item.
-    * Image
-        * Random - Randomly chosen image.
+* File
+    * Random - Randomly chosen media item.
+* Image
+    * Random - Randomly chosen image.
 
 > Note: Other field types are not currently supported.  Relationship-based fields, such as Droplink and Multi-list, should be anonymized by anonymizing the related item.
 
 ### Cautions
-1. Only content you choose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.
+**Only content you choose to be anonymized will be anonymized.  This only includes content in the content tree.  Other content and data will NOT be anonymized.**
 
 ## Installation
 
@@ -110,7 +111,11 @@ Confirm the setting by viewing /sitecore/admin/showconfig.aspx
 
 The Content Anonymizer lives under the Sitecore Admin folder.  To run the Anonymizer, navigate to:
 
-http://site.com/sitecore/admin/contentanonymizer
+    Desktop > Start Menu > Demo Data Tools > Content Anonymizer
+
+or
+
+    http://{site domain}/sitecore/admin/contentanonymizer
 
 You will be required to sign in if you are not already signed in.
 
@@ -177,6 +182,8 @@ An Example may be as follows for an email address related to person template:
 
 ![Configure Custom Formats](https://raw.github.com/onenorth/content-anonymizer/master/img/configure-custom-formats.png)
 
+> Note: Configured Formats will persist when changing Templates.  However, the Formats will only be selectable if the Fields used within the Tokens match with the Fields available within the current Template.
+
 ### Configure Fields
 Choose which fields you want to anonymize by specifying the type of anonymization.
 Fields that do not have a selected anonymization type will not be anonymized.
@@ -199,8 +206,8 @@ You can optionally select all with the **all items** checkbox.
 
 ### Running
 To run the anonymization, click the **Anonymize** button.
-Note: the anonymize button appears disabled if required fields are not populated.
-Please make sure all required fields have been filled out.
+> Note: the anonymize button appears disabled if required fields are not populated. Please make sure all required fields have been filled out.
+
 You will see a confirmation dialog appear that summarizes the selections.
 
 ![Confirm](https://raw.github.com/onenorth/content-anonymizer/master/img/confirm.png)
