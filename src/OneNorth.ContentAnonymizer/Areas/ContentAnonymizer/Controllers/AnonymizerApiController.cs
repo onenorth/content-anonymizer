@@ -186,24 +186,39 @@ namespace OneNorth.ContentAnonymizer.Areas.ContentAnonymizer.Controllers
 
                 // Process each translation
                 foreach(var translation in translations)
-                { 
-                    // Remove the older versions
-                    while (translation.Versions.GetVersionNumbers().Length > 1)
-                    {
-                        var version = database.GetItem(translation.ID, translation.Language, translation.Versions.GetVersionNumbers()[0]);
-                        if (version == null)
-                            break;
-
-                        if (version.Language == translation.Language && version.Version.Number == translation.Version.Number)
-                            break;
-
-                        version.Versions.RemoveVersion();
-                    }
+                {
+                    // Reset the translation back to the version 1
+                    ResetItemVersion(translation);
 
                     // Anonymize the translation
                     ItemAnonymizer.Instance.AnonymizeItem(translation, anonymizeOptions);
                 }
             }
+        }
+
+        private void ResetItemVersion(Sitecore.Data.Items.Item item)
+        {
+            item.Versions.RemoveAll(false);
+
+            // We need to use private property assignment to change the version to 1
+            // Someone hold my beer...
+            if (item.Version.Number > 1)
+            {
+                var itemDataProp = item.GetType().GetField("_innerData", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var newItemData = new ItemData(item.InnerData.Definition, item.InnerData.Language, Sitecore.Data.Version.Parse(1), item.InnerData.Fields);
+                itemDataProp.SetValue(item, newItemData);
+            }
+
+            // We need to let all the fields think that they have been changed
+            // Someone hold my other beer...
+            var itemChanges = new Sitecore.Data.Items.ItemChanges(item);
+            foreach (Sitecore.Data.Fields.Field field in item.Fields)
+            {
+                itemChanges.SetFieldValue(field, field.Value, string.Empty);
+            }
+
+            var changesDataProp = item.GetType().GetField("_changes", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            changesDataProp.SetValue(item, itemChanges);
         }
     }
 }
